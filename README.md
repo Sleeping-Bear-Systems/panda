@@ -2,22 +2,22 @@
 
 ## Running the Application
 
-```pwsh
+```sh
 bun dev
 ```
 
 ## Testing
 
-```pwsh
+```sh
 bun test
 ```
 
 ## Prettier
 
-```pwsh
+```sh
 bun format
 ```
 
-```pwsh
+```sh
 bun format:fix
 ```
