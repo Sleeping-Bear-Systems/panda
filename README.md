@@ -21,3 +21,13 @@ bun format
 ```sh
 bun format:fix
 ```
+
+## Linting
+
+```sh
+bun lint
+```
+
+```sh
+bun lint:fix
+```
