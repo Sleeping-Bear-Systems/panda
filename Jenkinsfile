@@ -10,6 +10,7 @@ pipeline {
             steps {
                 script {
                     sh 'bun install'
+                    sh 'bun lint'
                     sh 'bun test'
                 }
             }
