@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 
-describe("example", () => {
-  test("success!", () => {
+describe("index", () => {
+  test("test", () => {
     expect(true).toBe(true);
   });
 });
