@@ -4,8 +4,8 @@
     "dev": "bun run --hot src/index.ts",
     "format": "bunx prettier . --check",
     "format:fix": "bunx prettier . --write",
-    "lint": "bunx stylelint public/css/*.{css,scss}",
-    "lint:fix": "bunx stylelint public/css/*.{css,scss} --fix"
+    "lint": "bunx eslint . && bunx stylelint public/css/*.{css,scss}",
+    "lint:fix": "bunx eslint . --fix && bunx stylelint public/css/*.{css,scss} --fix"
   },
   "dependencies": {
     "hono": "^4.8.5",
