@@ -1,6 +1,6 @@
 import { describe, test, expect } from "bun:test";
-import { BookState, evolve, initialState } from "./bookState";
-import { BookRated, BookRecommended } from "./bookEvent";
+import { BookRating, BookState, evolve, initialState } from "./bookState";
+import { RatingAdded, BookRecommended, RatingRemoved } from "./bookEvent";
 
 describe("initialState()", () => {
   test("return Unknown", () => {
@@ -26,20 +26,20 @@ describe("evolve()", () => {
       isbn: event.data.isbn,
       title: event.data.title,
       year: event.data.year,
-      ratings: [],
+      ratings: new Map<string, BookRating>(),
     });
   });
 
-  test("BookRated applied to Recommended with no ratings adds the rating", () => {
+  test("RatingAdded applied to Recommended with no ratings adds the rating", () => {
     const initial: BookState = {
       status: "Recommended",
       isbn: "1234567890123",
       title: "title",
       year: 2025,
-      ratings: [],
+      ratings: new Map<string, BookRating>(),
     };
-    const event: BookRated = {
-      type: "BookRated",
+    const event: RatingAdded = {
+      type: "RatingAdded",
       data: {
         isbn: "1234567890123",
         rating: 5,
@@ -48,18 +48,73 @@ describe("evolve()", () => {
       },
     };
     const state = evolve(initial, event);
-    expect(state).toBe({
+    expect(state).toEqual({
       status: "Recommended",
       isbn: initial.isbn,
       title: initial.title,
       year: initial.year,
-      ratings: [
-        {
-          rating: 5,
-          reason: "reason",
-          userId: "userId",
-        },
-      ],
+      ratings: new Map<string, BookRating>([
+        ["userId", { rating: 5, reason: "reason" }],
+      ]),
+    });
+  });
+
+  test("RatingAdded applied to Recommended with existing ratings updates the rating", () => {
+    const initial: BookState = {
+      status: "Recommended",
+      isbn: "1234567890123",
+      title: "title",
+      year: 2025,
+      ratings: new Map<string, BookRating>([
+        ["userId", { rating: 5, reason: "reason" }],
+      ]),
+    };
+    const event: RatingAdded = {
+      type: "RatingAdded",
+      data: {
+        isbn: "1234567890123",
+        rating: 1,
+        reason: "new reason",
+        userId: "userId",
+      },
+    };
+    const state = evolve(initial, event);
+    expect(state).toEqual({
+      status: "Recommended",
+      isbn: initial.isbn,
+      title: initial.title,
+      year: initial.year,
+      ratings: new Map<string, BookRating>([
+        ["userId", { rating: 1, reason: "new reason" }],
+      ]),
+    });
+  });
+
+  test("RatingRemoved applied to Recommended with existing ratings removes the rating", () => {
+    const initial: BookState = {
+      status: "Recommended",
+      isbn: "1234567890123",
+      title: "title",
+      year: 2025,
+      ratings: new Map<string, BookRating>([
+        ["userId", { rating: 5, reason: "reason" }],
+      ]),
+    };
+    const event: RatingRemoved = {
+      type: "RatingRemoved",
+      data: {
+        isbn: "1234567890123",
+        reason: "new reason",
+        userId: "userId",
+      },
+    };
+    const state = evolve(initial, event);
+    expect(state).toEqual({
+      status: "Recommended",
+      isbn: initial.isbn,
+      title: initial.title,
+      year: initial.year,
+      ratings: new Map<string, BookRating>(),
     });
   });
 });

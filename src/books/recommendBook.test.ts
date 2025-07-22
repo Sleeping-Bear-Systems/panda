@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
-import { BookState, initialState } from "./bookState";
-import { recommendBook, RecommendBook } from "./recommendBook";
+import { BookRating, BookState, initialState } from "./bookState";
+import { recommendBook } from "./recommendBook";
+import { RecommendBook } from "./bookCommand";
 
 describe("recommendBook()", () => {
   test("Unknown returns BookRecommend event", () => {
@@ -31,7 +32,7 @@ describe("recommendBook()", () => {
       isbn: "1234567890123",
       title: "title",
       year: 2025,
-      ratings: [],
+      ratings: new Map<string, BookRating>(),
     };
     const command: RecommendBook = {
       type: "RecommendBook",

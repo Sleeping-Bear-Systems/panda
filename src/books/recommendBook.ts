@@ -1,12 +1,6 @@
-import type { Command } from "@event-driven-io/emmett";
 import { BookState } from "./bookState";
 import { BookEvent } from "./bookEvent";
-
-/** Recommend book command. */
-export type RecommendBook = Command<
-  "RecommendBook",
-  { isbn: string; title: string; year: number }
->;
+import { RecommendBook } from "./bookCommand";
 
 /** Recommends a book. */
 export function recommendBook(

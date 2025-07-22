@@ -4,7 +4,6 @@ import { BookEvent } from "./bookEvent";
 export interface BookRating {
   rating: number;
   reason: string;
-  userId: string;
 }
 /** Book state. */
 export type BookState =
@@ -14,7 +13,7 @@ export type BookState =
       isbn: string;
       title: string;
       year: number;
-      ratings: BookRating[];
+      ratings: Map<string, BookRating>;
     };
 
 /** Initial state function. */
@@ -25,24 +24,37 @@ export function initialState(): BookState {
 /** Evolve function. */
 export function evolve(state: BookState, event: BookEvent): BookState {
   if (state.status == "Unknown") {
-    if (event.type == "BookRecommended") {
-      return {
-        status: "Recommended",
-        isbn: event.data.isbn,
-        title: event.data.title,
-        year: event.data.year,
-        ratings: [],
-      };
+    switch (event.type) {
+      case "BookRecommended":
+        return {
+          status: "Recommended",
+          isbn: event.data.isbn,
+          title: event.data.title,
+          year: event.data.year,
+          ratings: new Map<string, BookRating>(),
+        };
     }
-  } else if (state.status == "Recommended") {
-    if (event.type == "BookRated" && state.isbn == event.data.isbn) {
-      state.ratings = state.ratings
-        .filter((r) => r.userId != event.data.userId)
-        .concat({
+  } else if (state.status == "Recommended" && state.isbn == event.data.isbn) {
+    switch (event.type) {
+      case "RatingAdded": {
+        const ratings = new Map<string, BookRating>(state.ratings);
+        ratings.set(event.data.userId, {
           rating: event.data.rating,
           reason: event.data.reason,
-          userId: event.data.userId,
         });
+        return {
+          ...state,
+          ratings,
+        };
+      }
+      case "RatingRemoved": {
+        const ratings = new Map<string, BookRating>(state.ratings);
+        ratings.delete(event.data.userId);
+        return {
+          ...state,
+          ratings,
+        };
+      }
     }
   }
   return state;
