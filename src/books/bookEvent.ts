@@ -9,7 +9,7 @@ export type BookRecommended = Event<
 /** Book rated event. */
 export type BookRated = Event<
   "BookRated",
-  { isbn: string; rating: number; userId: string }
+  { isbn: string; rating: number; reason: string; userId: string }
 >;
 
 /** Book event. */

@@ -1,7 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { BookState, initialState } from "./bookState";
 import { recommendBook, RecommendBook } from "./recommendBook";
-import { BookRecommended } from "./bookEvent";
 
 describe("recommendBook()", () => {
   test("Unknown returns BookRecommend event", () => {
@@ -16,11 +15,14 @@ describe("recommendBook()", () => {
     };
     const events = recommendBook(command, state);
     expect(events.length).toEqual(1);
-    const event = events[0] as BookRecommended;
-    expect(event.type).toEqual("BookRecommended");
-    expect(event.data.isbn).toEqual(command.data.isbn);
-    expect(event.data.title).toEqual(command.data.title);
-    expect(event.data.year).toEqual(command.data.year);
+    expect(events[0]).toEqual({
+      type: "BookRecommended",
+      data: {
+        isbn: command.data.isbn,
+        title: command.data.title,
+        year: command.data.year,
+      },
+    });
   });
 
   test("Recommended returns no events", () => {
@@ -29,6 +31,7 @@ describe("recommendBook()", () => {
       isbn: "1234567890123",
       title: "title",
       year: 2025,
+      ratings: [],
     };
     const command: RecommendBook = {
       type: "RecommendBook",
@@ -39,6 +42,6 @@ describe("recommendBook()", () => {
       },
     };
     const events = recommendBook(command, state);
-    expect(events.length).toEqual(0);
+    expect(events).toBeEmpty();
   });
 });
