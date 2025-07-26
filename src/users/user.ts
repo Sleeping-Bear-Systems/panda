@@ -1,8 +1,8 @@
 export type Role = "Administrator" | "General" | "Guest";
 
-export interface User {
+export type User = {
   id: string;
   username: string;
   password: string;
   role: Role;
-}
+};

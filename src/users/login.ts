@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { User } from "./user";
 import { z } from "zod/v4";
 import { zValidator } from "@hono/zod-validator";
+import jwt from "jsonwebtoken";
 
 const users: User[] = [
   {
@@ -46,13 +47,20 @@ export function mapLoginEndpoint(): Hono {
     if (!user) {
       return c.text("Invalid username or password", 401);
     }
-    return c.json(
+    const jwtSecret = process.env.JWT_SECRET_KEY;
+    if (!jwtSecret) {
+      return c.text("Unable to create JWT", 401);
+    }
+    const token = jwt.sign(
       {
+        id: user.id,
         username: user.username,
         role: user.role,
       },
-      200,
+      jwtSecret,
+      { expiresIn: "1d" },
     );
+    return c.json({ token }, 200);
   });
   return app;
 }

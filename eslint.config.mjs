@@ -10,4 +10,9 @@ export default tseslint.config(
   {
     ignores: ["public/js/**"],
   },
+  {
+    rules: {
+      "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+    },
+  },
 );

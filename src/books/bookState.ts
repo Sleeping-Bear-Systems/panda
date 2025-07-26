@@ -1,10 +1,10 @@
 import { BookEvent } from "./bookEvent";
 
 /** Book rating. */
-export interface BookRating {
+export type BookRating = {
   rating: number;
   reason: string;
-}
+};
 /** Book state. */
 export type BookState =
   | { status: "Unknown" }
