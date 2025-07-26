@@ -7,6 +7,7 @@
         "@datalust/winston-seq": "^3.0.1",
         "@event-driven-io/emmett": "^0.38.3",
         "@event-driven-io/emmett-postgresql": "^0.38.3",
+        "@hono/zod-validator": "^0.7.2",
         "hono": "^4.8.5",
         "winston": "^3.17.0",
         "zod": "^4.0.5",
@@ -71,6 +72,8 @@
     "@event-driven-io/emmett-postgresql": ["@event-driven-io/emmett-postgresql@0.38.3", "", { "peerDependencies": { "@event-driven-io/emmett": "0.38.3", "@event-driven-io/pongo": "0.16.4" } }, "sha512-ZnnFMPAPpGYqV2kbRM1ScsuUa02Ct/fZFt0umqkfeHXsbbEsGpyXxP8DJ1ZSG6wBfkzGSwZEw0qErW5QXEbhJA=="],
 
     "@event-driven-io/pongo": ["@event-driven-io/pongo@0.16.4", "", { "peerDependencies": { "@event-driven-io/dumbo": "0.12.1", "@types/mongodb": "^4.0.7", "@types/pg": "^8.11.6", "@types/uuid": "^10.0.0", "ansis": "^3.3.2", "cli-table3": "^0.6.5", "commander": "^12.1.0", "pg": "^8.12.0", "pg-connection-string": "^2.6.4", "uuid": "^10.0.0" }, "bin": { "pongo": "dist/cli.js" } }, "sha512-ZaWZCTo5Y4lFHY7HgqtZlPv0PhlhTDPY9Bqr/3me46n7CikXq9G+GLaKFyi12/iqPTHB9TwS62r+8fDpUYKjnQ=="],
+
+    "@hono/zod-validator": ["@hono/zod-validator@0.7.2", "", { "peerDependencies": { "hono": ">=3.9.0", "zod": "^3.25.0 || ^4.0.0" } }, "sha512-ub5eL/NeZ4eLZawu78JpW/J+dugDAYhwqUIdp9KYScI6PZECij4Hx4UsrthlEUutqDDhPwRI0MscUfNkvn/mqQ=="],
 
     "@humanfs/core": ["@humanfs/core@0.19.1", "", {}, "sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA=="],
 

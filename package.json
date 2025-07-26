@@ -11,6 +11,7 @@
     "@datalust/winston-seq": "^3.0.1",
     "@event-driven-io/emmett": "^0.38.3",
     "@event-driven-io/emmett-postgresql": "^0.38.3",
+    "@hono/zod-validator": "^0.7.2",
     "hono": "^4.8.5",
     "winston": "^3.17.0",
     "zod": "^4.0.5"
