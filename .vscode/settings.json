@@ -1,3 +1,15 @@
 {
-  "cSpell.words": ["bunx", "datalust", "pwsh"]
+  "cSpell.words": ["bunx", "datalust", "pongo", "pwsh"],
+
+  // The path to the `bun` executable.
+  "bun.runtime": "${env:HOME}/.bun/bin/",
+
+  // If support for Bun should be added to the default "JavaScript Debug Terminal".
+  "bun.debugTerminal.enabled": true,
+
+  // If the debugger should stop on the first line of the program.
+  "bun.debugTerminal.stopOnEntry": false,
+
+  // Glob pattern to find test files. Defaults to the value shown below.
+  "bun.test.filePattern": "**/*{.test.,.spec.,_test_,_spec_}{js,ts,tsx,jsx,mts,cts}"
 }
