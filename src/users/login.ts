@@ -3,27 +3,10 @@ import { User } from "./user";
 import { z } from "zod/v4";
 import { zValidator } from "@hono/zod-validator";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import { setCookie } from "hono/cookie";
 
-const users: User[] = [
-  {
-    id: "cc57350b-f778-4563-b214-0f9a1d5bc0d9",
-    username: "admin",
-    password: "password1234",
-    role: "Administrator",
-  },
-  {
-    id: "97dfe0c4-b01e-4fbf-a6df-9deb9287502c",
-    username: "user",
-    password: "password1234",
-    role: "General",
-  },
-  {
-    id: "44298c16-7e50-4966-abbc-f653679db543",
-    username: "guest",
-    password: "password1234",
-    role: "Guest",
-  },
-];
+const users: User[] = createTestUsers();
 
 /** The zod validator a login request */
 const loginRequestSchema = z.object({
@@ -37,14 +20,17 @@ export type LoginRequest = z.infer<typeof loginRequestSchema>;
 /** Maps the login endpoint. */
 export function mapLoginEndpoint(): Hono {
   const app = new Hono();
-  app.post("/login", zValidator("json", loginRequestSchema), (c) => {
+  app.post("/login", zValidator("json", loginRequestSchema), async (c) => {
     const loginRequest = c.req.valid("json");
-    const user = users.find(
-      (u) =>
-        u.username == loginRequest.username &&
-        u.password == loginRequest.password,
-    );
+    const user = users.find((u) => u.username == loginRequest.username);
     if (!user) {
+      return c.text("Invalid username or password", 401);
+    }
+    const isValidPassword = await bcrypt.compare(
+      loginRequest.password,
+      user.passwordHash,
+    );
+    if (!isValidPassword) {
       return c.text("Invalid username or password", 401);
     }
     const jwtSecret = process.env.JWT_SECRET_KEY;
@@ -60,7 +46,34 @@ export function mapLoginEndpoint(): Hono {
       jwtSecret,
       { expiresIn: "1d" },
     );
-    return c.json({ token }, 200);
+    setCookie(c, "panda", token, {
+      httpOnly: true,
+      sameSite: "Strict",
+    });
+    return c.json({}, 200);
   });
   return app;
+}
+
+function createTestUsers(): User[] {
+  return [
+    {
+      id: "cc57350b-f778-4563-b214-0f9a1d5bc0d9",
+      username: "admin",
+      passwordHash: bcrypt.hashSync("password1234", 10),
+      role: "Administrator",
+    },
+    {
+      id: "97dfe0c4-b01e-4fbf-a6df-9deb9287502c",
+      username: "user",
+      passwordHash: bcrypt.hashSync("password1234", 10),
+      role: "General",
+    },
+    {
+      id: "44298c16-7e50-4966-abbc-f653679db543",
+      username: "guest",
+      passwordHash: bcrypt.hashSync("password1234", 10),
+      role: "Guest",
+    },
+  ];
 }

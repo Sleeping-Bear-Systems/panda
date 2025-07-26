@@ -3,6 +3,6 @@ export type Role = "Administrator" | "General" | "Guest";
 export type User = {
   id: string;
   username: string;
-  password: string;
+  passwordHash: string;
   role: Role;
 };
