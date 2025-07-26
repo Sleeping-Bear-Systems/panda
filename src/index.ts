@@ -3,6 +3,7 @@ import { serveStatic } from "hono/bun";
 import winston from "winston";
 import { SeqTransport } from "@datalust/winston-seq";
 import { mapAddRatingEndpoint } from "./books/addRating";
+import { mapLoginEndpoint } from "./users/login";
 
 // start logger
 const environment = process.env.NODE_ENV ?? "development";
@@ -43,6 +44,7 @@ app.get("/api/ping", (c) => {
   return c.json({}, 200);
 });
 app.route("/api/books", mapAddRatingEndpoint());
+app.route("/api/users", mapLoginEndpoint());
 app.use("/*", serveStatic({ root: "./public" }));
 
 export default {
