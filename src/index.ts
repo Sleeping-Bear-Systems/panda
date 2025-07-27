@@ -5,14 +5,22 @@ import { mapLoginEndpoint } from "./users/login";
 import { DateProvider, DefaultDateProvider } from "./dateProvider";
 import { mapLogoutEndpoint } from "./users/logout";
 import { createLogger } from "./logger";
+import { jwt } from "hono/jwt";
+import { validateConfig } from "./config";
 
 // set date provider
 const dateProvider: DateProvider = DefaultDateProvider;
 
-const environment = process.env.NODE_ENV ?? "development";
-
 // start logger
-const logger = createLogger(environment);
+const logger = createLogger();
+
+// validate application config
+const config = validateConfig({
+  connectionString: process.env.POSTGRES_CONNECTION_STRING,
+  environment: process.env.NODE_ENV,
+  jwtSecret: process.env.JWT_SECRET,
+  port: process.env.PORT,
+});
 
 // start database
 const connectionString = process.env.POSTGRES_CONNECTION_STRING;
@@ -29,12 +37,20 @@ app.get("/api/ping", (c) => {
   return c.json({}, 200);
 });
 app.route("/api/books", mapAddRatingEndpoint());
-app.route("/api/users", mapLoginEndpoint(dateProvider));
-app.route("/api/users", mapLogoutEndpoint());
+app.route("/api/users", mapLoginEndpoint(dateProvider, config));
+app.route("/api/users", mapLogoutEndpoint(config));
+
+app.get(
+  "/api/test",
+  jwt({ secret: config.jwtSecret, cookie: config.jwtCookieName }),
+  (c) => {
+    return c.text("success", 200);
+  },
+);
+
 app.use("/*", serveStatic({ root: "./public" }));
 
-const port = process.env.PORT ?? 3000;
 export default {
-  port,
+  port: config.port,
   fetch: app.fetch,
 };

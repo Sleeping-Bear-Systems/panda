@@ -3,7 +3,7 @@ import winston from "winston";
 import { z } from "zod/v4";
 
 /** Create logger function. */
-export function createLogger(environment: string): winston.Logger {
+export function createLogger(): winston.Logger {
   const seqConfigurationSchema = z.object({
     apiKey: z.string().nonempty(),
     url: z.url(),
@@ -31,7 +31,7 @@ export function createLogger(environment: string): winston.Logger {
 
   // start logger
   const logger = winston.createLogger({
-    defaultMeta: { application: "panda", environment: environment },
+    defaultMeta: { application: "panda" },
     format: winston.format.combine(
       winston.format.splat(),
       winston.format.simple(),
