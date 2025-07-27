@@ -5,6 +5,9 @@ import { zValidator } from "@hono/zod-validator";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { setCookie } from "hono/cookie";
+import { addDays } from "date-fns";
+import { DateProvider } from "../dateProvider";
+import { cookieName } from "./constants";
 
 const users: User[] = createTestUsers();
 
@@ -18,11 +21,14 @@ const loginRequestSchema = z.object({
 export type LoginRequest = z.infer<typeof loginRequestSchema>;
 
 /** Maps the login endpoint. */
-export function mapLoginEndpoint(): Hono {
+export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
   const app = new Hono();
   app.post("/login", zValidator("json", loginRequestSchema), async (c) => {
     const loginRequest = c.req.valid("json");
-    const user = users.find((u) => u.username == loginRequest.username);
+    const lowercaseUsername = loginRequest.username.toLocaleLowerCase();
+    const user = users.find(
+      (u) => u.username.toLocaleLowerCase() == lowercaseUsername,
+    );
     if (!user) {
       return c.text("Invalid username or password", 401);
     }
@@ -46,9 +52,10 @@ export function mapLoginEndpoint(): Hono {
       jwtSecret,
       { expiresIn: "1d" },
     );
-    setCookie(c, "panda", token, {
+    setCookie(c, cookieName, token, {
       httpOnly: true,
       sameSite: "Strict",
+      expires: addDays(dateProvider(), 1),
     });
     return c.json({}, 200);
   });

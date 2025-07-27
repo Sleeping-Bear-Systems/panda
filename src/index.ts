@@ -4,6 +4,11 @@ import winston from "winston";
 import { SeqTransport } from "@datalust/winston-seq";
 import { mapAddRatingEndpoint } from "./books/addRating";
 import { mapLoginEndpoint } from "./users/login";
+import { DateProvider, DefaultDateProvider } from "./dateProvider";
+import { mapLogoutEndpoint } from "./users/logout";
+
+// set date provider
+const dateProvider: DateProvider = DefaultDateProvider;
 
 // start logger
 const environment = process.env.NODE_ENV ?? "development";
@@ -44,7 +49,8 @@ app.get("/api/ping", (c) => {
   return c.json({}, 200);
 });
 app.route("/api/books", mapAddRatingEndpoint());
-app.route("/api/users", mapLoginEndpoint());
+app.route("/api/users", mapLoginEndpoint(dateProvider));
+app.route("/api/users", mapLogoutEndpoint());
 app.use("/*", serveStatic({ root: "./public" }));
 
 export default {
