@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 import { setCookie } from "hono/cookie";
 import { addDays } from "date-fns";
 import { DateProvider } from "../dateProvider";
-import { cookieName } from "./constants";
+import { Config } from "../config";
 
 const users: User[] = createTestUsers();
 
@@ -21,7 +21,10 @@ const loginRequestSchema = z.object({
 export type LoginRequest = z.infer<typeof loginRequestSchema>;
 
 /** Maps the login endpoint. */
-export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
+export function mapLoginEndpoint(
+  dateProvider: DateProvider,
+  config: Config,
+): Hono {
   const app = new Hono();
   app.post("/login", zValidator("json", loginRequestSchema), async (c) => {
     const loginRequest = c.req.valid("json");
@@ -39,21 +42,18 @@ export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
     if (!isValidPassword) {
       return c.text("Invalid username or password", 401);
     }
-    const jwtSecret = process.env.JWT_SECRET;
-    if (!jwtSecret) {
-      return c.text("Unable to create JWT", 500);
-    }
     const token = await sign(
       {
         id: user.id,
         sub: user.username,
         role: user.role,
       },
-      jwtSecret,
+      config.jwtSecret,
     );
-    setCookie(c, cookieName, token, {
+    setCookie(c, config.jwtCookieName, token, {
       httpOnly: true,
       sameSite: "Strict",
+      secure: true,
       expires: addDays(dateProvider(), 1),
     });
     return c.json({}, 200);
