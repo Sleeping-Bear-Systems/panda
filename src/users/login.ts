@@ -41,7 +41,7 @@ export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
     }
     const jwtSecret = process.env.JWT_SECRET_KEY;
     if (!jwtSecret) {
-      return c.text("Unable to create JWT", 401);
+      return c.text("Unable to create JWT", 500);
     }
     const token = jwt.sign(
       {
