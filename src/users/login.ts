@@ -1,8 +1,8 @@
 import { Hono } from "hono";
+import { sign } from "hono/jwt";
 import { User } from "./user";
 import { z } from "zod/v4";
 import { zValidator } from "@hono/zod-validator";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { setCookie } from "hono/cookie";
 import { addDays } from "date-fns";
@@ -39,18 +39,17 @@ export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
     if (!isValidPassword) {
       return c.text("Invalid username or password", 401);
     }
-    const jwtSecret = process.env.JWT_SECRET_KEY;
+    const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret) {
       return c.text("Unable to create JWT", 500);
     }
-    const token = jwt.sign(
+    const token = await sign(
       {
         id: user.id,
-        username: user.username,
+        sub: user.username,
         role: user.role,
       },
       jwtSecret,
-      { expiresIn: "1d" },
     );
     setCookie(c, cookieName, token, {
       httpOnly: true,

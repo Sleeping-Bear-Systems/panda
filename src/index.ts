@@ -5,6 +5,8 @@ import { mapLoginEndpoint } from "./users/login";
 import { DateProvider, DefaultDateProvider } from "./dateProvider";
 import { mapLogoutEndpoint } from "./users/logout";
 import { createLogger } from "./logger";
+import { cookieName } from "./users/constants";
+import { jwt } from "hono/jwt";
 
 // set date provider
 const dateProvider: DateProvider = DefaultDateProvider;
@@ -31,6 +33,13 @@ app.get("/api/ping", (c) => {
 app.route("/api/books", mapAddRatingEndpoint());
 app.route("/api/users", mapLoginEndpoint(dateProvider));
 app.route("/api/users", mapLogoutEndpoint());
+
+const jwtSecret = process.env.JWT_SECRET ?? "";
+
+app.get("/api/test", jwt({ secret: jwtSecret, cookie: cookieName }), (c) => {
+  return c.text("success", 200);
+});
+
 app.use("/*", serveStatic({ root: "./public" }));
 
 const port = process.env.PORT ?? 3000;
