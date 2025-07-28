@@ -4,11 +4,14 @@ import { decide } from "./clubCommand";
 import { describe, test } from "bun:test";
 
 const given = DeciderSpecification.for({ decide, evolve, initialState });
-const userId = "userId";
-const timestamp = new Date(2025, 6, 27);
+const metadata = {
+  userId: "userId",
+  timestamp: new Date(2025, 6, 27),
+  correlationId: "123",
+};
 
 describe("StartClub", () => {
-  test("applied to Unknown generates ClubStarted event", () => {
+  test("applied to Unknown generates ClubStarted and ClubJoined event", () => {
     given([])
       .when({
         type: "StartClub",
@@ -18,10 +21,7 @@ describe("StartClub", () => {
           description: "description",
           isPublic: true,
         },
-        metadata: {
-          userId,
-          timestamp,
-        },
+        metadata,
       })
       .then([
         {
@@ -32,22 +32,16 @@ describe("StartClub", () => {
             description: "description",
             isPublic: true,
           },
-          metadata: {
-            userId,
-            timestamp,
-          },
+          metadata,
         },
         {
-          type: "MemberAdded",
+          type: "ClubJoined",
           data: {
             id: "12345",
-            userId,
             role: "Owner",
+            status: "Active",
           },
-          metadata: {
-            userId,
-            timestamp,
-          },
+          metadata,
         },
       ]);
   });
@@ -62,10 +56,7 @@ describe("StartClub", () => {
           description: "description",
           isPublic: true,
         },
-        metadata: {
-          userId,
-          timestamp,
-        },
+        metadata,
       },
     ])
       .when({
@@ -76,10 +67,7 @@ describe("StartClub", () => {
           description: "description",
           isPublic: true,
         },
-        metadata: {
-          userId,
-          timestamp,
-        },
+        metadata,
       })
       .then([]);
   });
@@ -92,10 +80,7 @@ describe("EndClub", () => {
       data: {
         id: "12345",
       },
-      metadata: {
-        userId,
-        timestamp,
-      },
+      metadata,
     });
   });
 
@@ -109,16 +94,13 @@ describe("EndClub", () => {
           description: "description",
           isPublic: true,
         },
-        metadata: {
-          userId,
-          timestamp,
-        },
+        metadata,
       },
     ])
       .when({
         type: "EndClub",
         data: { id: "12345" },
-        metadata: { userId, timestamp },
+        metadata,
       })
       .then([]);
   });

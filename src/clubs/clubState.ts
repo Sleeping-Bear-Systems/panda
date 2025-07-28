@@ -1,5 +1,8 @@
+import { CommandHandler } from "@event-driven-io/emmett";
 import { ClubEvent } from "./clubEvent";
+import { MemberState } from "./memberState";
 
+/** Club state. */
 export type ClubState =
   | {
       status: "Unknown";
@@ -20,13 +23,6 @@ export type ClubState =
       isPublic: boolean;
       members: Map<string, MemberState>;
     };
-
-export type MemberRole = "Owner" | "General";
-
-export type MemberState = {
-  role: MemberRole;
-  isActive: boolean;
-};
 
 /** Initial state function. */
 export function initialState(): ClubState {
@@ -54,18 +50,32 @@ export function evolve(state: ClubState, event: ClubEvent): ClubState {
         isPublic: state.isPublic,
         members: new Map<string, MemberState>(state.members),
       };
+    } else if (event.type == "ClubJoined" && event.data.id == state.id) {
+      const members = new Map<string, MemberState>(state.members);
+      members.set(event.metadata.userId, {
+        role: event.data.role,
+        status: event.data.status,
+      });
+      return {
+        ...state,
+        members,
+      };
+    } else if (event.type == "ClubLeft" && event.data.id == state.id) {
+      const members = new Map<string, MemberState>(state.members);
+      members.delete(event.metadata.userId);
+      return {
+        ...state,
+        members,
+      };
     }
   }
   return state;
 }
 
-export function isOwner(state: ClubState, userId: string): boolean {
-  if (state.status == "Unknown") {
-    return false;
-  }
-  const member = state.members.get(userId);
-  if (!member) {
-    return false;
-  }
-  return member.role == "Owner";;
+/** Club command handler. */
+export const handle = CommandHandler({ evolve, initialState });
+
+/** Map to stream ID function */
+export function mapToStreamId(id: string): string {
+  return `club-${id}`;
 }

@@ -1,11 +1,12 @@
-import { addMember, AddMember } from "./addMember";
+import { joinClub, JoinClub } from "./joinClub";
 import { ClubEvent } from "./clubEvent";
 import { ClubState } from "./clubState";
 import { endClub, EndClub } from "./endClub";
 import { startClub, StartClub } from "./startClub";
+import { LeaveClub, leaveClub } from "./leaveClub";
 
 /** Book command. */
-export type ClubCommand = StartClub | EndClub | AddMember;
+export type ClubCommand = StartClub | EndClub | JoinClub | LeaveClub;
 
 /** Decide function. */
 export function decide(command: ClubCommand, state: ClubState): ClubEvent[] {
@@ -14,7 +15,9 @@ export function decide(command: ClubCommand, state: ClubState): ClubEvent[] {
       return startClub(command, state);
     case "EndClub":
       return endClub(command, state);
-    case "AddMember":
-      return addMember(command, state);
+    case "JoinClub":
+      return joinClub(command, state);
+    case "LeaveClub":
+      return leaveClub(command, state);
   }
 }

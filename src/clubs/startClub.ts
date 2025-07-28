@@ -1,6 +1,7 @@
 import { Command } from "@event-driven-io/emmett/.";
 import { ClubState } from "./clubState";
 import { ClubEvent } from "./clubEvent";
+import { ClubMetadata } from "./clubMetadata";
 
 export type StartClub = Command<
   "StartClub",
@@ -10,10 +11,7 @@ export type StartClub = Command<
     description: string;
     isPublic: boolean;
   },
-  {
-    userId: string;
-    timestamp: Date;
-  }
+  ClubMetadata
 >;
 
 export function startClub(command: StartClub, state: ClubState): ClubEvent[] {
@@ -29,22 +27,16 @@ export function startClub(command: StartClub, state: ClubState): ClubEvent[] {
         description: command.data.description,
         isPublic: command.data.isPublic,
       },
-      metadata: {
-        userId: command.metadata.userId,
-        timestamp: command.metadata.timestamp,
-      },
+      metadata: command.metadata,
     },
     {
-      type: "MemberAdded",
+      type: "ClubJoined",
       data: {
         id: command.data.id,
-        userId: command.metadata.userId,
         role: "Owner",
+        status: "Active",
       },
-      metadata: {
-        userId: command.metadata.userId,
-        timestamp: command.metadata.timestamp,
-      },
+      metadata: command.metadata,
     },
   ];
 }

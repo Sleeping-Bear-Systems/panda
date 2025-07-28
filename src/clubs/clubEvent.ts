@@ -1,5 +1,6 @@
 import { type Event } from "@event-driven-io/emmett";
-import { MemberRole } from "./clubState";
+import { ClubMetadata } from "./clubMetadata";
+import { MemberRole, MemberStatus } from "./memberState";
 
 /** Club started event. */
 export type ClubStarted = Event<
@@ -10,10 +11,7 @@ export type ClubStarted = Event<
     description: string;
     isPublic: boolean;
   },
-  {
-    userId: string;
-    timestamp: Date;
-  }
+  ClubMetadata
 >;
 
 /** Club ended event. */
@@ -22,31 +20,27 @@ export type ClubEnded = Event<
   {
     id: string;
   },
-  { userId: string; timestamp: Date }
+  ClubMetadata
 >;
 
-/** Member added event. */
-export type MemberAdded = Event<
-  "MemberAdded",
+/** Club joined event. */
+export type ClubJoined = Event<
+  "ClubJoined",
   {
     id: string;
-    userId: string;
     role: MemberRole;
+    status: MemberStatus;
   },
-  {
-    userId: string;
-    timestamp: Date;
-  }
+  ClubMetadata
 >;
 
-export type MemberRemoved = Event<
-  "MemberRemoved",
+export type ClubLeft = Event<
+  "ClubLeft",
   {
     id: string;
-    userId: string;
   },
-  { userId: string; timestamp: Date }
+  ClubMetadata
 >;
 
 /** Club event. */
-export type ClubEvent = ClubStarted | ClubEnded | MemberAdded | MemberRemoved;
+export type ClubEvent = ClubStarted | ClubEnded | ClubJoined | ClubLeft;
