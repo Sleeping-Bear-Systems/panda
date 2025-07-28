@@ -5,7 +5,7 @@ import { endClub, EndClub } from "./endClub";
 import { startClub, StartClub } from "./startClub";
 import { LeaveClub, leaveClub } from "./leaveClub";
 
-/** Book command. */
+/** Club command. */
 export type ClubCommand = StartClub | EndClub | JoinClub | LeaveClub;
 
 /** Decide function. */
