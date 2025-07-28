@@ -16,6 +16,7 @@ describe("StartClub", () => {
           id: "12345",
           name: "name",
           description: "description",
+          isPublic: true,
         },
         metadata: {
           userId,
@@ -29,6 +30,19 @@ describe("StartClub", () => {
             id: "12345",
             name: "name",
             description: "description",
+            isPublic: true,
+          },
+          metadata: {
+            userId,
+            timestamp,
+          },
+        },
+        {
+          type: "MemberAdded",
+          data: {
+            id: "12345",
+            userId,
+            role: "Owner",
           },
           metadata: {
             userId,
@@ -46,6 +60,7 @@ describe("StartClub", () => {
           id: "12345",
           name: "name",
           description: "description",
+          isPublic: true,
         },
         metadata: {
           userId,
@@ -59,6 +74,7 @@ describe("StartClub", () => {
           id: "12345",
           name: "name",
           description: "description",
+          isPublic: true,
         },
         metadata: {
           userId,
@@ -91,6 +107,7 @@ describe("EndClub", () => {
           id: "24680",
           name: "name",
           description: "description",
+          isPublic: true,
         },
         metadata: {
           userId,
