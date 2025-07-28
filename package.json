@@ -2,10 +2,11 @@
   "name": "panda",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
-    "format": "bunx prettier . --check",
+    "fix": "bun lint:fix && bun format:fix",
     "format:fix": "bunx prettier . --write",
-    "lint": "bunx eslint . && bunx stylelint public/css/*.{css,scss}",
-    "lint:fix": "bunx eslint . --fix && bunx stylelint public/css/*.{css,scss} --fix"
+    "format": "bunx prettier . --check",
+    "lint:fix": "bunx eslint . --fix && bunx stylelint public/css/*.{css,scss} --fix",
+    "lint": "bunx eslint . && bunx stylelint public/css/*.{css,scss}"
   },
   "dependencies": {
     "@datalust/winston-seq": "^3.0.1",
