@@ -19,7 +19,7 @@ export type JoinClub = Command<
 export function joinClub(command: JoinClub, state: ClubState): ClubEvent[] {
   if (
     state.status != "Started" ||
-    state.id == command.data.id ||
+    state.id != command.data.id ||
     state.members.has(command.metadata.userId)
   ) {
     return [];
