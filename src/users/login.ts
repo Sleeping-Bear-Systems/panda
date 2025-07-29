@@ -26,19 +26,16 @@ export function mapLoginEndpoint(
   config: Config,
 ): Hono {
   const app = new Hono();
-  app.post("/login", zValidator("json", loginRequestSchema), async (c) => {
-    const loginRequest = c.req.valid("json");
-    const lowercaseUsername = loginRequest.username.toLocaleLowerCase();
+  app.post("/login", zValidator("form", loginRequestSchema), async (c) => {
+    const { username, password } = c.req.valid("form");
+    const lowercaseUsername = username.toLocaleLowerCase();
     const user = users.find(
       (u) => u.username.toLocaleLowerCase() == lowercaseUsername,
     );
     if (!user) {
       return c.text("Invalid username or password", 401);
     }
-    const isValidPassword = await bcrypt.compare(
-      loginRequest.password,
-      user.passwordHash,
-    );
+    const isValidPassword = await bcrypt.compare(password, user.passwordHash);
     if (!isValidPassword) {
       return c.text("Invalid username or password", 401);
     }
@@ -56,7 +53,7 @@ export function mapLoginEndpoint(
       secure: true,
       expires: addDays(dateProvider(), 1),
     });
-    return c.json({}, 200);
+    return c.redirect("/index.html");
   });
   return app;
 }
