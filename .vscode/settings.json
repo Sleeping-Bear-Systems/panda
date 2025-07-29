@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["bunx", "datalust", "pongo", "pwsh"],
+  "cSpell.words": ["bunx", "datalust", "farris", "pongo", "pwsh"],
 
   // The path to the `bun` executable.
   "bun.runtime": "${env:HOME}/.bun/bin/",
