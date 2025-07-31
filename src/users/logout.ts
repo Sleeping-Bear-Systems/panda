@@ -11,7 +11,7 @@ export function mapLogoutEndpoint(config: Config): Hono {
       sameSite: "Strict",
       expires: new Date(0),
     });
-    return c.text("Logged out", 200);
+    return c.redirect("/login");
   });
   return app;
 }
