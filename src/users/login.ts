@@ -3,7 +3,6 @@ import { sign } from "hono/jwt";
 import { User } from "./user";
 import { z } from "zod/v4";
 import { zValidator } from "@hono/zod-validator";
-import bcrypt from "bcrypt";
 import { setCookie } from "hono/cookie";
 import { addDays } from "date-fns";
 import { DateProvider } from "../dateProvider";
