@@ -3,7 +3,6 @@ import { sign } from "hono/jwt";
 import { User } from "./user";
 import { z } from "zod/v4";
 import { zValidator } from "@hono/zod-validator";
-import bcrypt from "bcrypt";
 import { setCookie } from "hono/cookie";
 import { addDays } from "date-fns";
 import { DateProvider } from "../dateProvider";
@@ -35,7 +34,11 @@ export function mapLoginEndpoint(
     if (!user) {
       return c.text("Invalid username or password", 401);
     }
-    const isValidPassword = await bcrypt.compare(password, user.passwordHash);
+    const isValidPassword = await Bun.password.verify(
+      password,
+      user.passwordHash,
+      "bcrypt",
+    );
     if (!isValidPassword) {
       return c.text("Invalid username or password", 401);
     }
@@ -63,19 +66,28 @@ function createTestUsers(): User[] {
     {
       id: "cc57350b-f778-4563-b214-0f9a1d5bc0d9",
       username: "admin",
-      passwordHash: bcrypt.hashSync("password1234", 10),
+      passwordHash: Bun.password.hashSync("password1234", {
+        algorithm: "bcrypt",
+        cost: 10,
+      }),
       role: "Administrator",
     },
     {
       id: "97dfe0c4-b01e-4fbf-a6df-9deb9287502c",
       username: "user",
-      passwordHash: bcrypt.hashSync("password1234", 10),
+      passwordHash: Bun.password.hashSync("password1234", {
+        algorithm: "bcrypt",
+        cost: 10,
+      }),
       role: "General",
     },
     {
       id: "44298c16-7e50-4966-abbc-f653679db543",
       username: "guest",
-      passwordHash: bcrypt.hashSync("password1234", 10),
+      passwordHash: Bun.password.hashSync("password1234", {
+        algorithm: "bcrypt",
+        cost: 10,
+      }),
       role: "Guest",
     },
   ];
