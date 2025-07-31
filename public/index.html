@@ -14,6 +14,14 @@
       <a href="/login">Login</a>
       <a href="/about">About</a>
       <a href="/create-club">Create Club</a>
+      <button
+        hx-post="/api/users/logout"
+        hx-include="none"
+        hx-trigger="click"
+        hx-on::after-request="window.location.href='/login'"
+      >
+        Logout
+      </button>
     </nav>
     <h1>Welcome to Panda</h1>
     <p>Your app is running!</p>
