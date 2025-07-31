@@ -7,6 +7,9 @@ import { mapLogoutEndpoint } from "./users/logout";
 import { createLogger } from "./logger";
 import { jwt } from "hono/jwt";
 import { validateConfig } from "./config";
+import { mapAboutPage } from "./pages/about";
+import { mapLoginPage } from "./pages/login";
+import { mapCreateClub as mapCreateClubPage } from "./pages/createClub";
 
 // set date provider
 const dateProvider: DateProvider = DefaultDateProvider;
@@ -39,6 +42,9 @@ app.get("/api/ping", (c) => {
 app.route("/api/books", mapAddRatingEndpoint());
 app.route("/api/users", mapLoginEndpoint(dateProvider, config));
 app.route("/api/users", mapLogoutEndpoint(config));
+app.route("/", mapAboutPage());
+app.route("/", mapLoginPage());
+app.route("/", mapCreateClubPage());
 
 app.get(
   "/api/test",
