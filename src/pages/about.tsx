@@ -26,6 +26,6 @@ export function mapAboutPage(): Hono {
       </html>,
     );
   });
-  
+
   return app;
 }
