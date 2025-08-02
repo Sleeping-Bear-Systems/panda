@@ -41,7 +41,7 @@ export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
     }
     const token = await sign(
       {
-        id: user.id,
+        userId: user.id,
         sub: user.username,
         role: user.role,
       },

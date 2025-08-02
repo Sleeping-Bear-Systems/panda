@@ -13,7 +13,7 @@ export function mapLoginPage(): Hono {
             <a href="/home">Home</a>
           </nav>
           <h1>Login</h1>
-          <form action="/api/users/login" method="post">
+          <form action="/api/public/login" method="post">
             <label for="username">Username</label>
             <input name="username" type="text" required />
             <label for="password">Password</label>

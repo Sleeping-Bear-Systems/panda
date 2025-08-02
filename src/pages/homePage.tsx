@@ -15,7 +15,7 @@ export function mapHomePage(): Hono {
             <a href="/about">About</a>
             <a href="/create-club">Create Club</a>
             <button
-              hx-post="/api/users/logout"
+              hx-post="/api/public/logout"
               hx-include="none"
               hx-trigger="click"
               hx-on--after-request="window.location.href='/login'"

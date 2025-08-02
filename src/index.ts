@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { createMiddleware } from "hono/factory";
 import { serveStatic } from "hono/bun";
 import { mapAddRatingEndpoint } from "./books/addRating";
 import { mapLoginEndpoint } from "./users/login";
@@ -26,24 +27,28 @@ logger.info("🚀 Starting application");
 
 const app = new Hono();
 
-app.get("/api/ping", (c) => {
+app.use(
+  "/api/private",
+  jwt({ secret: appConfig.JWT_SECRET, cookie: appConfig.jwtCookieName }),
+);
+
+app.get("/api/public/ping", (c) => {
   return c.json({}, 200);
 });
 app.route("/api/books", mapAddRatingEndpoint());
-app.route("/api/users", mapLoginEndpoint(dateProvider));
-app.route("/api/users", mapLogoutEndpoint());
+app.route("/api/public", mapLoginEndpoint(dateProvider));
+app.route("/api/public", mapLogoutEndpoint());
+
 app.route("/", mapAboutPage());
 app.route("/", mapLoginPage());
 app.route("/", mapCreateClubPage());
 app.route("/", mapHomePage());
 
-app.get(
-  "/api/test",
-  jwt({ secret: appConfig.JWT_SECRET, cookie: appConfig.jwtCookieName }),
-  (c) => {
-    return c.text("success", 200);
-  },
-);
+app.get("/api/private/test", (c) => {
+  const payload = c.get("jwtPayload");
+  if (payload.id) logger.info(JSON.stringify(payload));
+  return c.text("success", 200);
+});
 
 app.use("/*", serveStatic({ root: "./public" }));
 
