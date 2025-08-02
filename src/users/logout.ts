@@ -1,16 +1,12 @@
 import { Hono } from "hono";
-import { setCookie } from "hono/cookie";
-import { Config } from "../config";
+import { deleteCookie } from "hono/cookie";
+import { appConfig } from "../config";
 
 /** Maps the logout endpoint. */
-export function mapLogoutEndpoint(config: Config): Hono {
+export function mapLogoutEndpoint(): Hono {
   const app = new Hono();
   app.post("/logout", (c) => {
-    setCookie(c, config.jwtCookieName, "", {
-      httpOnly: true,
-      sameSite: "Strict",
-      expires: new Date(0),
-    });
+    deleteCookie(c, appConfig.jwtCookieName);
     return c.redirect("/login");
   });
   return app;

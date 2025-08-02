@@ -1,20 +1,24 @@
 import { z } from "zod/v4";
 
-const configSchema = z.object({
-  connectionString: z.string().nonempty(),
-  environment: z
+const environmentConfigSchema = z.object({
+  NODE_ENV: z
     .literal(["development", "production", "staging", "test"])
     .default("development"),
-  jwtCookieName: z.string().nonempty().default("panda"),
-  jwtSecret: z.string().min(32),
-  port: z.coerce.number().int().gte(1024).default(3000),
+  SEQ_API_KEY: z.string().optional(),
+  SEQ_URL: z.url().optional(),
+  JWT_SECRET: z.string().min(16),
+  BCRYPT_KEY: z.string().min(16),
+  POSTGRES_CONNECTION_STRING: z.string(),
+  PORT: z.coerce.number().min(1024).max(49151),
 });
 
-export type Config = Readonly<z.infer<typeof configSchema>>;
+export type ApplicationConfig = Readonly<
+  z.infer<typeof environmentConfigSchema>
+> & {
+  jwtCookieName: string;
+};
 
-/** Validates the supplied configuration */
-export function validateConfig(
-  record: Record<string, string | number | boolean | undefined | null>,
-): Config {
-  return configSchema.parse(record);
-}
+export const appConfig: ApplicationConfig = {
+  ...environmentConfigSchema.parse(process.env),
+  jwtCookieName: "panda",
+};
