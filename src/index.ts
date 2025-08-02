@@ -6,10 +6,11 @@ import { DateProvider, DefaultDateProvider } from "./dateProvider";
 import { mapLogoutEndpoint } from "./users/logout";
 import { createLogger } from "./logger";
 import { jwt } from "hono/jwt";
-import { mapAboutPage } from "./pages/about";
-import { mapLoginPage } from "./pages/login";
-import { mapCreateClub as mapCreateClubPage } from "./pages/createClub";
+import { mapAboutPage } from "./pages/aboutPage";
+import { mapLoginPage } from "./pages/loginPage";
+import { mapCreateClub as mapCreateClubPage } from "./pages/createClubPage";
 import { appConfig } from "./config";
+import { mapHomePage } from "./pages/homePage";
 
 // set date provider
 const dateProvider: DateProvider = DefaultDateProvider;
@@ -37,6 +38,7 @@ app.route("/api/users", mapLogoutEndpoint());
 app.route("/", mapAboutPage());
 app.route("/", mapLoginPage());
 app.route("/", mapCreateClubPage());
+app.route("/", mapHomePage());
 
 app.get(
   "/api/test",

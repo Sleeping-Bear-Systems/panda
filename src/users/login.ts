@@ -53,7 +53,7 @@ export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
       secure: true,
       expires: addDays(dateProvider(), 1),
     });
-    return c.redirect("/index.html");
+    return c.redirect("/home");
   });
   return app;
 }
