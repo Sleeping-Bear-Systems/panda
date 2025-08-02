@@ -1,42 +1,29 @@
 import { SeqTransport } from "@datalust/winston-seq";
 import winston from "winston";
-import { z } from "zod/v4";
+import { appConfig } from "./config";
 
-/** Create logger function. */
-export function createLogger(): winston.Logger {
-  const seqConfigurationSchema = z.object({
-    apiKey: z.string().nonempty(),
-    url: z.url(),
-  });
+// set up default transports
+const transports: winston.transport[] = [new winston.transports.Console()];
 
-  // set up default transports
-  const transports: winston.transport[] = [new winston.transports.Console()];
-
-  // configure Seq transport
-  const result = seqConfigurationSchema.safeParse({
-    apiKey: process.env.SEQ_API_KEY,
-    url: process.env.SEQ_URL,
-  });
-  if (result.success) {
-    transports.push(
-      new SeqTransport({
-        serverUrl: result.data.url,
-        apiKey: result.data.apiKey,
-        onError: (e: Error) => {
-          console.error(e);
-        },
-      }),
-    );
-  }
-
-  // start logger
-  const logger = winston.createLogger({
-    defaultMeta: { application: "panda" },
-    format: winston.format.combine(
-      winston.format.splat(),
-      winston.format.simple(),
-    ),
-    transports,
-  });
-  return logger;
+// set up Seq logging
+if (appConfig.SEQ_URL && appConfig.SEQ_API_KEY) {
+  transports.push(
+    new SeqTransport({
+      serverUrl: appConfig.SEQ_URL,
+      apiKey: appConfig.SEQ_API_KEY,
+      onError: (e: Error) => {
+        console.error(e);
+      },
+    }),
+  );
 }
+
+// create logger
+export const logger = winston.createLogger({
+  defaultMeta: { application: "panda" },
+  format: winston.format.combine(
+    winston.format.splat(),
+    winston.format.simple(),
+  ),
+  transports,
+});
