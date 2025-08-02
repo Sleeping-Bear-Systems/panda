@@ -6,24 +6,16 @@ import { DateProvider, DefaultDateProvider } from "./dateProvider";
 import { mapLogoutEndpoint } from "./users/logout";
 import { createLogger } from "./logger";
 import { jwt } from "hono/jwt";
-import { validateConfig } from "./config";
 import { mapAboutPage } from "./pages/about";
 import { mapLoginPage } from "./pages/login";
 import { mapCreateClub as mapCreateClubPage } from "./pages/createClub";
+import { appConfig } from "./config";
 
 // set date provider
 const dateProvider: DateProvider = DefaultDateProvider;
 
 // start logger
 const logger = createLogger();
-
-// validate application config
-const config = validateConfig({
-  connectionString: process.env.POSTGRES_CONNECTION_STRING,
-  environment: process.env.NODE_ENV,
-  jwtSecret: process.env.JWT_SECRET,
-  port: process.env.PORT,
-});
 
 // start database
 const connectionString = process.env.POSTGRES_CONNECTION_STRING;
@@ -40,15 +32,15 @@ app.get("/api/ping", (c) => {
   return c.json({}, 200);
 });
 app.route("/api/books", mapAddRatingEndpoint());
-app.route("/api/users", mapLoginEndpoint(dateProvider, config));
-app.route("/api/users", mapLogoutEndpoint(config));
+app.route("/api/users", mapLoginEndpoint(dateProvider));
+app.route("/api/users", mapLogoutEndpoint());
 app.route("/", mapAboutPage());
 app.route("/", mapLoginPage());
 app.route("/", mapCreateClubPage());
 
 app.get(
   "/api/test",
-  jwt({ secret: config.jwtSecret, cookie: config.jwtCookieName }),
+  jwt({ secret: appConfig.JWT_SECRET, cookie: appConfig.jwtCookieName }),
   (c) => {
     return c.text("success", 200);
   },
@@ -57,6 +49,6 @@ app.get(
 app.use("/*", serveStatic({ root: "./public" }));
 
 export default {
-  port: config.port,
+  port: appConfig.PORT,
   fetch: app.fetch,
 };

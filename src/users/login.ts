@@ -6,7 +6,7 @@ import { zValidator } from "@hono/zod-validator";
 import { setCookie } from "hono/cookie";
 import { addDays } from "date-fns";
 import { DateProvider } from "../dateProvider";
-import { Config } from "../config";
+import { appConfig } from "../config";
 
 const users: User[] = createTestUsers();
 
@@ -20,10 +20,7 @@ const loginRequestSchema = z.object({
 export type LoginRequest = z.infer<typeof loginRequestSchema>;
 
 /** Maps the login endpoint. */
-export function mapLoginEndpoint(
-  dateProvider: DateProvider,
-  config: Config,
-): Hono {
+export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
   const app = new Hono();
   app.post("/login", zValidator("form", loginRequestSchema), async (c) => {
     const { username, password } = c.req.valid("form");
@@ -48,9 +45,9 @@ export function mapLoginEndpoint(
         sub: user.username,
         role: user.role,
       },
-      config.jwtSecret,
+      appConfig.JWT_SECRET,
     );
-    setCookie(c, config.jwtCookieName, token, {
+    setCookie(c, appConfig.jwtCookieName, token, {
       httpOnly: true,
       sameSite: "Strict",
       secure: true,
