@@ -4,7 +4,7 @@ import { mapAddRatingEndpoint } from "./books/addRating";
 import { mapLoginEndpoint } from "./users/login";
 import { DateProvider, DefaultDateProvider } from "./dateProvider";
 import { mapLogoutEndpoint } from "./users/logout";
-import { createLogger } from "./logger";
+import { logger } from "./logger";
 import { jwt } from "hono/jwt";
 import { mapAboutPage } from "./pages/aboutPage";
 import { mapLoginPage } from "./pages/loginPage";
@@ -14,9 +14,6 @@ import { mapHomePage } from "./pages/homePage";
 
 // set date provider
 const dateProvider: DateProvider = DefaultDateProvider;
-
-// start logger
-const logger = createLogger();
 
 // start database
 const connectionString = process.env.POSTGRES_CONNECTION_STRING;
