@@ -8,7 +8,7 @@ import { logger } from "./logger";
 import { jwt } from "hono/jwt";
 import { mapAboutPage } from "./pages/aboutPage";
 import { mapLoginPage } from "./pages/loginPage";
-import { mapCreateClubPage } from "./pages/createClubPage";
+import { mapStartClubPage } from "./pages/startClubPage";
 import { appConfig } from "./config";
 import { mapHomePage } from "./pages/homePage";
 
@@ -41,7 +41,7 @@ app.route("/api/public", mapLogoutEndpoint());
 app.route("/", mapLoginPage());
 
 app.route("/", mapAboutPage());
-app.route("/", mapCreateClubPage());
+app.route("/", mapStartClubPage());
 app.route("/", mapHomePage());
 
 app.get("/api/private/test", (c) => {

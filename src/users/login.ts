@@ -44,9 +44,12 @@ export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
     }
     const token = await sign(
       {
-        userId: user.id,
-        sub: user.username,
+        sub: user.id,
+        preferred_username: user.username,
         role: user.role,
+        iss: "panda",
+        exp: Math.floor(addDays(dateProvider(), 1).getTime() / 1000),
+        iat: Math.floor(Date.now() / 1000),
       },
       appConfig.JWT_SECRET,
     );
@@ -57,7 +60,7 @@ export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
       expires: addDays(dateProvider(), 1),
     });
     logger.info("User '%s' logged in", username);
-    return c.redirect("/home");
+    return c.redirect("/");
   });
   return app;
 }
