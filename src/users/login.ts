@@ -7,6 +7,7 @@ import { setCookie } from "hono/cookie";
 import { addDays } from "date-fns";
 import { DateProvider } from "../dateProvider";
 import { appConfig } from "../config";
+import { logger } from "../logger";
 
 const users: User[] = createTestUsers();
 
@@ -29,6 +30,7 @@ export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
       (u) => u.username.toLocaleLowerCase() == lowercaseUsername,
     );
     if (!user) {
+      logger.info("User not found: '%s'", username);
       return c.text("Invalid username or password", 401);
     }
     const isValidPassword = await Bun.password.verify(
@@ -37,6 +39,7 @@ export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
       "bcrypt",
     );
     if (!isValidPassword) {
+      logger.info("Invalid password: '%s'", username);
       return c.text("Invalid username or password", 401);
     }
     const token = await sign(
@@ -53,6 +56,7 @@ export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
       secure: true,
       expires: addDays(dateProvider(), 1),
     });
+    logger.info("User '%s' logged in", username);
     return c.redirect("/home");
   });
   return app;
