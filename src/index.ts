@@ -1,5 +1,4 @@
 import { Hono } from "hono";
-import { createMiddleware } from "hono/factory";
 import { serveStatic } from "hono/bun";
 import { mapAddRatingEndpoint } from "./books/addRating";
 import { mapLoginEndpoint } from "./users/login";
@@ -9,7 +8,7 @@ import { logger } from "./logger";
 import { jwt } from "hono/jwt";
 import { mapAboutPage } from "./pages/aboutPage";
 import { mapLoginPage } from "./pages/loginPage";
-import { mapCreateClub as mapCreateClubPage } from "./pages/createClubPage";
+import { mapCreateClubPage } from "./pages/createClubPage";
 import { appConfig } from "./config";
 import { mapHomePage } from "./pages/homePage";
 
@@ -35,12 +34,13 @@ app.use(
 app.get("/api/public/ping", (c) => {
   return c.json({}, 200);
 });
-app.route("/api/books", mapAddRatingEndpoint());
+app.route("/api/private/books", mapAddRatingEndpoint());
 app.route("/api/public", mapLoginEndpoint(dateProvider));
 app.route("/api/public", mapLogoutEndpoint());
 
-app.route("/", mapAboutPage());
 app.route("/", mapLoginPage());
+
+app.route("/", mapAboutPage());
 app.route("/", mapCreateClubPage());
 app.route("/", mapHomePage());
 

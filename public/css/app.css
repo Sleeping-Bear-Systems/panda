@@ -7,3 +7,27 @@ img[alt="Sleeping Bear Logo"] {
   display: block;
   margin: 32px auto 16px;
 }
+
+form {
+    display: flex;
+    flex-direction:column;
+    max-width: 20em;
+}
+
+input {
+    margin-bottom: 1em;
+}
+
+button[type="submit"]
+{
+    max-width: 8em;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+}
+
+a {
+    margin-right: 1em;
+}
