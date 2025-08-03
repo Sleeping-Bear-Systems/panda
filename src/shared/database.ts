@@ -1,6 +1,7 @@
 import { getPostgreSQLEventStore } from "@event-driven-io/emmett-postgresql";
-import { appConfig } from "./config";
 import { pongoClient } from "@event-driven-io/pongo";
+
+import { appConfig } from "./config";
 import { logger } from "./logger";
 
 logger.info("Starting event store");

@@ -1,8 +1,9 @@
+import { DeciderSpecification } from "@event-driven-io/emmett";
 import { describe, expect, test } from "bun:test";
-import { BookRating, BookState, evolve, initialState } from "./bookState";
+
 import { addRating } from "./addRating";
 import { AddRating, decide } from "./bookCommand";
-import { DeciderSpecification } from "@event-driven-io/emmett";
+import { BookRating, BookState, evolve, initialState } from "./bookState";
 
 const given = DeciderSpecification.for({ decide, evolve, initialState });
 

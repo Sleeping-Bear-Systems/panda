@@ -1,9 +1,9 @@
-import { joinClub, JoinClub } from "./joinClub";
 import { ClubEvent } from "./clubEvent";
 import { ClubState } from "./clubState";
-import { endClub, EndClub } from "./endClub";
-import { startClub, StartClub } from "./startClub";
+import { EndClub, endClub } from "./endClub";
+import { JoinClub, joinClub } from "./joinClub";
 import { LeaveClub, leaveClub } from "./leaveClub";
+import { StartClub, startClub } from "./startClub";
 
 /** Club command. */
 export type ClubCommand = StartClub | EndClub | JoinClub | LeaveClub;

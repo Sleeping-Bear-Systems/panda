@@ -1,7 +1,8 @@
 import { describe, expect, test } from "bun:test";
+
+import { RecommendBook } from "./bookCommand";
 import { BookRating, BookState, initialState } from "./bookState";
 import { recommendBook } from "./recommendBook";
-import { RecommendBook } from "./bookCommand";
 
 describe("recommendBook()", () => {
   test("Unknown returns BookRecommend event", () => {

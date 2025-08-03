@@ -1,4 +1,5 @@
 import { CommandHandler } from "@event-driven-io/emmett";
+
 import { ClubEvent } from "./clubEvent";
 import { MemberState } from "./memberState";
 

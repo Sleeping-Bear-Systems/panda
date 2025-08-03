@@ -1,6 +1,6 @@
-import { BookState } from "./bookState";
-import { BookEvent } from "./bookEvent";
 import { RecommendBook } from "./bookCommand";
+import { BookEvent } from "./bookEvent";
+import { BookState } from "./bookState";
 
 /** Recommends a book. */
 export function recommendBook(

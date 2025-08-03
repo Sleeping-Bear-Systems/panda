@@ -1,6 +1,7 @@
 import { Command } from "@event-driven-io/emmett/.";
-import { ClubMetadata } from "./clubMetadata";
+
 import { ClubEvent } from "./clubEvent";
+import { ClubMetadata } from "./clubMetadata";
 import { ClubState } from "./clubState";
 
 /** Leave club command. */

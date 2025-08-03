@@ -1,5 +1,6 @@
 import { SeqTransport } from "@datalust/winston-seq";
 import winston from "winston";
+
 import { appConfig } from "./config";
 
 // set up default transports

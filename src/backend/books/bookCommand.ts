@@ -1,8 +1,9 @@
 import { Command } from "@event-driven-io/emmett/.";
-import { BookState } from "./bookState";
-import { recommendBook } from "./recommendBook";
+
 import { addRating } from "./addRating";
 import { BookEvent } from "./bookEvent";
+import { BookState } from "./bookState";
+import { recommendBook } from "./recommendBook";
 import { removeRating } from "./removeRating";
 
 export type AddRating = Command<

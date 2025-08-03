@@ -1,7 +1,8 @@
 import { DeciderSpecification } from "@event-driven-io/emmett";
-import { evolve, initialState } from "./clubState";
-import { decide } from "./clubCommand";
 import { describe, test } from "bun:test";
+
+import { decide } from "./clubCommand";
+import { evolve, initialState } from "./clubState";
 
 const given = DeciderSpecification.for({ decide, evolve, initialState });
 const metadata = {
