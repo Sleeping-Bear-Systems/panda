@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { deleteCookie } from "hono/cookie";
-import { appConfig } from "../config";
+import { appConfig } from "../../config";
 
 /** Maps the logout endpoint. */
 export function mapLogoutEndpoint(): Hono {

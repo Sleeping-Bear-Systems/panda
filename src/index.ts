@@ -1,16 +1,16 @@
 import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
-import { mapAddRatingEndpoint } from "./books/addRating";
-import { mapLoginEndpoint } from "./users/login";
+import { mapAddRatingEndpoint } from "./backend/books/addRating";
+import { mapLoginEndpoint } from "./backend/users/login";
 import { DateProvider, DefaultDateProvider } from "./dateProvider";
-import { mapLogoutEndpoint } from "./users/logout";
+import { mapLogoutEndpoint } from "./backend/users/logout";
 import { logger } from "./logger";
 import { jwt } from "hono/jwt";
-import { mapAboutPage } from "./pages/aboutPage";
-import { mapLoginPage } from "./pages/loginPage";
-import { mapStartClubPage } from "./pages/startClubPage";
+import { aboutPage } from "./frontend/pages/aboutPage";
+import { loginPage } from "./frontend/pages/loginPage";
 import { appConfig } from "./config";
-import { mapHomePage } from "./pages/homePage";
+import { startClubPage } from "./frontend/pages/startClubPage";
+import { homePage } from "./frontend/pages/homePage";
 
 // set date provider
 const dateProvider: DateProvider = DefaultDateProvider;
@@ -38,11 +38,10 @@ app.route("/api/private/books", mapAddRatingEndpoint());
 app.route("/api/public", mapLoginEndpoint(dateProvider));
 app.route("/api/public", mapLogoutEndpoint());
 
-app.route("/", mapLoginPage());
-
-app.route("/", mapAboutPage());
-app.route("/", mapStartClubPage());
-app.route("/", mapHomePage());
+app.route("/", loginPage);
+app.route("/", aboutPage);
+app.route("/", startClubPage);
+app.route("/", homePage);
 
 app.get("/api/private/test", (c) => {
   const payload = c.get("jwtPayload");
