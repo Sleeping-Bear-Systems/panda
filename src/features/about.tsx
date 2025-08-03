@@ -1,14 +1,15 @@
 import { Hono } from "hono";
-import { Head } from "../components/head";
+import { Head } from "../shared/head";
+import { ROUTES } from "../shared/routes";
 
-export const aboutPage = new Hono().get("/about", (c) => {
+export const aboutPage = new Hono().get("/", (c) => {
   return c.html(
     <html>
       <Head />
       <body>
         <img src="/images/sleeping_bear_logo.svg" alt="Sleeping Bear Logo" />
         <nav>
-          <a href="/">Home</a>
+          <a href={ROUTES.HOME}>Home</a>
         </nav>
         <h1>About</h1>
         <div>

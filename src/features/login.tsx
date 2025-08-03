@@ -1,13 +1,32 @@
+import { Head } from "../shared/head";
 import { Hono } from "hono";
 import { sign } from "hono/jwt";
-import { User } from "./user";
 import { z } from "zod/v4";
 import { zValidator } from "@hono/zod-validator";
 import { setCookie } from "hono/cookie";
 import { addDays } from "date-fns";
-import { DateProvider } from "../../dateProvider";
-import { appConfig } from "../../config";
-import { logger } from "../../logger";
+import { appConfig } from "../shared/config";
+import { DefaultDateProvider } from "../shared/dateProvider";
+import { logger } from "../shared/logger";
+import { API_ROUTES, ROUTES } from "../shared/routes";
+
+export const loginPage = new Hono().get("/", (c) => {
+  return c.html(
+    <html>
+      <Head />
+      <body>
+        <h1>Login</h1>
+        <form action={API_ROUTES.LOGIN} method="post">
+          <label htmlFor="username">Username</label>
+          <input id="username" name="username" type="text" required />
+          <label htmlFor="password">Password</label>
+          <input id="password" name="password" type="password" required />
+          <button type="submit">Submit</button>
+        </form>
+      </body>
+    </html>,
+  );
+});
 
 const users: User[] = createTestUsers();
 
@@ -21,9 +40,10 @@ const loginRequestSchema = z.object({
 export type LoginRequest = z.infer<typeof loginRequestSchema>;
 
 /** Maps the login endpoint. */
-export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
-  const app = new Hono();
-  app.post("/login", zValidator("form", loginRequestSchema), async (c) => {
+export const loginApi = new Hono().post(
+  "/",
+  zValidator("form", loginRequestSchema),
+  async (c) => {
     const { username, password } = c.req.valid("form");
     const lowercaseUsername = username.toLocaleLowerCase();
     const user = users.find(
@@ -48,7 +68,7 @@ export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
         preferred_username: user.username,
         role: user.role,
         iss: "panda",
-        exp: Math.floor(addDays(dateProvider(), 1).getTime() / 1000),
+        exp: Math.floor(addDays(DefaultDateProvider(), 1).getTime() / 1000),
         iat: Math.floor(Date.now() / 1000),
       },
       appConfig.JWT_SECRET,
@@ -57,13 +77,12 @@ export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
       httpOnly: true,
       sameSite: "Strict",
       secure: true,
-      expires: addDays(dateProvider(), 1),
+      expires: addDays(DefaultDateProvider(), 1),
     });
     logger.info("User '%s' logged in", username);
-    return c.redirect("/");
-  });
-  return app;
-}
+    return c.redirect(ROUTES.HOME);
+  },
+);
 
 function createTestUsers(): User[] {
   return [
@@ -96,3 +115,12 @@ function createTestUsers(): User[] {
     },
   ];
 }
+
+export type Role = "Administrator" | "General" | "Guest";
+
+type User = {
+  id: string;
+  username: string;
+  passwordHash: string;
+  role: Role;
+};

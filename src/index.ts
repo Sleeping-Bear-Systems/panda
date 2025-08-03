@@ -1,55 +1,37 @@
 import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
-import { mapAddRatingEndpoint } from "./backend/books/addRating";
-import { mapLoginEndpoint } from "./backend/users/login";
-import { DateProvider, DefaultDateProvider } from "./dateProvider";
-import { mapLogoutEndpoint } from "./backend/users/logout";
-import { logger } from "./logger";
+import { addRatingApi } from "./backend/books/addRating";
+import { logout as logoutApi } from "./features/logout";
+import { logger } from "./shared/logger";
 import { jwt } from "hono/jwt";
-import { aboutPage } from "./frontend/pages/aboutPage";
-import { loginPage } from "./frontend/pages/loginPage";
-import { appConfig } from "./config";
-import { startClubPage } from "./frontend/pages/startClubPage";
-import { homePage } from "./frontend/pages/homePage";
-
-// set date provider
-const dateProvider: DateProvider = DefaultDateProvider;
-
-// start database
-const connectionString = process.env.POSTGRES_CONNECTION_STRING;
-if (!connectionString) {
-  logger.error("Invalid connection string.");
-  process.exit(1);
-}
+import { aboutPage } from "./features/about";
+import { loginApi, loginPage } from "./features/login";
+import { appConfig } from "./shared/config";
+import { startClubPage } from "./features/startClubPage";
+import { homePage } from "./features/homePage";
+import { API_ROUTES, ROUTES } from "./shared/routes";
 
 logger.info("🚀 Starting application");
 
-const app = new Hono();
-
-app.use(
-  "/api/private",
-  jwt({ secret: appConfig.JWT_SECRET, cookie: appConfig.jwtCookieName }),
-);
-
-app.get("/api/public/ping", (c) => {
-  return c.json({}, 200);
-});
-app.route("/api/private/books", mapAddRatingEndpoint());
-app.route("/api/public", mapLoginEndpoint(dateProvider));
-app.route("/api/public", mapLogoutEndpoint());
-
-app.route("/", loginPage);
-app.route("/", aboutPage);
-app.route("/", startClubPage);
-app.route("/", homePage);
-
-app.get("/api/private/test", (c) => {
-  const payload = c.get("jwtPayload");
-  if (payload.id) logger.info(JSON.stringify(payload));
-  return c.text("success", 200);
-});
-
-app.use("/*", serveStatic({ root: "./public" }));
+const app = new Hono()
+  .use(
+    "/api/private",
+    jwt({ secret: appConfig.JWT_SECRET, cookie: appConfig.jwtCookieName }),
+  )
+  // back-end routes
+  .get(API_ROUTES.PING, (c) => {
+    return c.json({}, 200);
+  })
+  .route(API_ROUTES.ADD_RATING, addRatingApi)
+  .route(API_ROUTES.LOGIN, loginApi)
+  .route(API_ROUTES.LOGOUT, logoutApi)
+  // front-end routes
+  .route(ROUTES.LOGIN, loginPage)
+  .route(ROUTES.ABOUT, aboutPage)
+  .route(ROUTES.START_CLUB, startClubPage)
+  .route(ROUTES.HOME, homePage)
+  // static assets
+  .use("/*", serveStatic({ root: "./public" }));
 
 export default {
   port: appConfig.PORT,

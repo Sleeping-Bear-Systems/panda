@@ -1,20 +1,20 @@
 import { Hono } from "hono";
-import { Head } from "../components/head";
-import { pageJwt } from "../../middlewares";
+import { Head } from "../shared/head";
+import { pageJwt } from "../shared/middlewares";
+import { API_ROUTES, ROUTES } from "../shared/routes";
 
-const path = "/start-club";
-export const startClubPage = new Hono().use(path, pageJwt).get(path, (c) => {
+export const startClubPage = new Hono().use("/", pageJwt).get("/", (c) => {
   return c.html(
     <html>
       <Head />
       <body>
         <nav>
-          <a href="/">Home</a>
+          <a href={ROUTES.HOME}>Home</a>
         </nav>
         <header>
           <h1>Start Club</h1>
         </header>
-        <form action="/api/private/start-club" method="post">
+        <form action={API_ROUTES.START_CLUB} method="post">
           <label htmlFor="name">Name</label>
           <input id="name" name="name" type="text" />
           <label htmlFor="description">Description</label>

@@ -23,19 +23,19 @@ export function addRating(command: AddRating, state: BookState): BookEvent[] {
   ];
 }
 
-const AddRatingRequestSchema = z.object({
+const addRatingRequestSchema = z.object({
   isbn: z.string(),
   rating: z.number().min(0).max(5),
   reason: z.string().optional(),
   userId: z.string().nonempty(),
 });
 
-type AddRatingRequest = z.infer<typeof AddRatingRequestSchema>;
+type AddRatingRequest = z.infer<typeof addRatingRequestSchema>;
 
-export function mapAddRatingEndpoint(): Hono {
-  const app = new Hono();
-
-  app.post("/add-rating", zValidator("json", AddRatingRequestSchema), (c) => {
+export const addRatingApi = new Hono().post(
+  "/",
+  zValidator("json", addRatingRequestSchema),
+  (c) => {
     const request: AddRatingRequest = c.req.valid("json");
     const command: AddRating = {
       type: "AddRating",
@@ -48,6 +48,5 @@ export function mapAddRatingEndpoint(): Hono {
     };
     console.log(command);
     return c.json({}, 400);
-  });
-  return app;
-}
+  },
+);

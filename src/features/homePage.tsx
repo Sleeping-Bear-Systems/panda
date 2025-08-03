@@ -1,22 +1,22 @@
 import { Hono } from "hono";
-import { Head } from "../components/head";
-import { pageJwt } from "../../middlewares";
+import { Head } from "../shared/head";
+import { pageJwt } from "../shared/middlewares";
+import { API_ROUTES, ROUTES } from "../shared/routes";
 
-const path = "/";
-export const homePage = new Hono().use(path, pageJwt).get(path, (c) => {
+export const homePage = new Hono().use("/", pageJwt).get("/", (c) => {
   return c.html(
     <html>
       <Head />
       <body>
         <img src="/images/sleeping_bear_logo.svg" alt="Sleeping Bear Logo" />
         <nav>
-          <a href="/about">About</a>
+          <a href={ROUTES.ABOUT}>About</a>
           <a href="/start-club">Start Club</a>
           <button
-            hx-post="/api/public/logout"
+            hx-post={API_ROUTES.LOGOUT}
             hx-include="none"
             hx-trigger="click"
-            hx-on--after-request="window.location.href='/login'"
+            hx-on--after-request={"window.location.href='" + ROUTES.LOGIN + "'"}
           >
             Logout
           </button>
