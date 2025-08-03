@@ -11,7 +11,7 @@ export function mapAboutPage(): Hono {
         <body>
           <img src="/images/sleeping_bear_logo.svg" alt="Sleeping Bear Logo" />
           <nav>
-            <a href="/home">Home</a>
+            <a href="/">Home</a>
           </nav>
           <h1>About</h1>
           <div>
