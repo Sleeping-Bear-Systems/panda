@@ -1,7 +1,8 @@
+import { Context, Next } from "hono";
 import { getCookie } from "hono/cookie";
 import { createMiddleware } from "hono/factory";
 import { verify } from "hono/jwt";
-import { Context, Next } from "hono";
+
 import { appConfig } from "./config";
 import { logger } from "./logger";
 import { ROUTES } from "./routes";

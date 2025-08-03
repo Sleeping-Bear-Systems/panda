@@ -1,4 +1,5 @@
 import { type Event } from "@event-driven-io/emmett";
+
 import { ClubMetadata } from "./clubMetadata";
 import { MemberRole, MemberStatus } from "./memberState";
 

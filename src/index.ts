@@ -1,14 +1,15 @@
 import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
-import { addRatingApi } from "./backend/books/addRating";
-import { logout as logoutApi } from "./features/logout";
-import { logger } from "./shared/logger";
 import { jwt } from "hono/jwt";
+
+import { addRatingApi } from "./backend/books/addRating";
 import { aboutPage } from "./features/about";
-import { loginApi, loginPage } from "./features/login";
-import { appConfig } from "./shared/config";
-import { startClubPage } from "./features/startClubPage";
 import { homePage } from "./features/homePage";
+import { loginApi, loginPage } from "./features/login";
+import { logout as logoutApi } from "./features/logout";
+import { startClubPage } from "./features/startClubPage";
+import { appConfig } from "./shared/config";
+import { logger } from "./shared/logger";
 import { API_ROUTES, ROUTES } from "./shared/routes";
 
 logger.info("🚀 Starting application");

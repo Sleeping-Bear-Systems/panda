@@ -1,6 +1,6 @@
+import { RemoveRating } from "./bookCommand";
 import { BookEvent } from "./bookEvent";
 import { BookState } from "./bookState";
-import { RemoveRating } from "./bookCommand";
 
 /** Remove rating function. */
 export function removeRating(

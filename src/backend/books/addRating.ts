@@ -1,9 +1,10 @@
-import { BookState } from "./bookState";
-import { BookEvent } from "./bookEvent";
-import { AddRating } from "./bookCommand";
 import { zValidator } from "@hono/zod-validator";
-import z from "zod/v4";
 import { Hono } from "hono";
+import z from "zod/v4";
+
+import { AddRating } from "./bookCommand";
+import { BookEvent } from "./bookEvent";
+import { BookState } from "./bookState";
 
 /** Add rating function. */
 export function addRating(command: AddRating, state: BookState): BookEvent[] {

@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+
 import { Head } from "../shared/head";
 import { pageJwt } from "../shared/middlewares";
 import { API_ROUTES, ROUTES } from "../shared/routes";
