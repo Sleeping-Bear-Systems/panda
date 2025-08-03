@@ -49,7 +49,7 @@ export function mapLoginEndpoint(dateProvider: DateProvider): Hono {
         role: user.role,
         iss: "panda",
         exp: Math.floor(addDays(dateProvider(), 1).getTime() / 1000),
-        iat: Math.floor(Date.now() / 1000)
+        iat: Math.floor(Date.now() / 1000),
       },
       appConfig.JWT_SECRET,
     );
