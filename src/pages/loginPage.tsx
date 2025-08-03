@@ -9,15 +9,12 @@ export function mapLoginPage(): Hono {
       <html>
         <Head />
         <body>
-          <nav>
-            <a href="/home">Home</a>
-          </nav>
           <h1>Login</h1>
-          <form action="/api/users/login" method="post">
-            <label for="username">Username</label>
-            <input name="username" type="text" required />
-            <label for="password">Password</label>
-            <input name="password" type="password" required />
+          <form action="/api/public/login" method="post">
+            <label htmlFor="username">Username</label>
+            <input id="username" name="username" type="text" required />
+            <label htmlFor="password">Password</label>
+            <input id="password" name="password" type="password" required />
             <button type="submit">Submit</button>
           </form>
         </body>

@@ -34,6 +34,7 @@ type AddRatingRequest = z.infer<typeof AddRatingRequestSchema>;
 
 export function mapAddRatingEndpoint(): Hono {
   const app = new Hono();
+
   app.post("/add-rating", zValidator("json", AddRatingRequestSchema), (c) => {
     const request: AddRatingRequest = c.req.valid("json");
     const command: AddRating = {
