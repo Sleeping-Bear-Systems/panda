@@ -14,20 +14,20 @@
     "@event-driven-io/emmett-postgresql": "^0.38.3",
     "@hono/zod-validator": "^0.7.2",
     "date-fns": "^4.1.0",
-    "hono": "^4.8.5",
+    "hono": "^4.8.12",
     "winston": "^3.17.0",
-    "zod": "^4.0.5"
+    "zod": "^4.0.14"
   },
   "devDependencies": {
-    "@eslint/js": "^9.31.0",
+    "@eslint/js": "^9.32.0",
     "@types/bcrypt": "^6.0.0",
     "@types/bun": "latest",
-    "eslint": "^9.31.0",
+    "eslint": "^9.32.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "prettier": "^3.6.2",
-    "stylelint": "^16.22.0",
+    "stylelint": "^16.23.0",
     "stylelint-config-standard": "^38.0.0",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.37.0"
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.39.0"
   }
 }
