@@ -26,9 +26,7 @@ export const createAccountPage: Hono = new Hono().get("/", (c) => {
           <h1>Create Account</h1>
         </header>
         <form action={API_ROUTES.CREATE_ACCOUNT} method="post">
-          <label htmlFor="email" name="email">
-            Email
-          </label>
+          <label htmlFor="email">Email</label>
           <input id="email" name="email" type="email" required />
           <label htmlFor="username">Username</label>
           <input id="username" name="username" type="text" required />
@@ -54,7 +52,7 @@ export const createAccountPage: Hono = new Hono().get("/", (c) => {
  */
 const createAccountRequestSchema = z
   .object({
-    email: z.email().nonempty().toLowerCase().trim(),
+    email: z.email().toLowerCase().trim(),
     username: z.string().nonempty().min(3).toLowerCase().trim(),
     password: z.string().nonempty().min(12).trim(),
     confirmPassword: z.string().nonempty().min(12).trim(),
@@ -81,7 +79,7 @@ export const createAccountApi: Hono = new Hono().post(
   async (c) => {
     const request = c.req.valid("form");
     const now = DefaultDateProvider();
-    const passwordHash = await Bun.password.hash(request.email, {
+    const passwordHash = await Bun.password.hash(request.password, {
       algorithm: "bcrypt",
       cost: 10,
     });
