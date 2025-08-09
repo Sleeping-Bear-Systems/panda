@@ -23,7 +23,9 @@ export const loginPage = new Hono().get("/", (c) => {
           <label htmlFor="password">Password</label>
           <input id="password" name="password" type="password" required />
           <button type="submit">Submit</button>
+          <button type="reset">Reset</button>
         </form>
+        <a href={ROUTES.CREATE_ACCOUNT}>Create Account</a>
       </body>
     </html>,
   );

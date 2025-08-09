@@ -22,6 +22,10 @@ button[type="submit"] {
   max-width: 8em;
 }
 
+button[type="reset"] {
+  max-width: 8em;
+}
+
 nav {
   display: flex;
   flex-direction: row;
