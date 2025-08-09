@@ -22,8 +22,10 @@ export const homePage = new Hono().use("/", pageJwt).get("/", (c) => {
             Logout
           </button>
         </nav>
-        <h1>Welcome to Panda</h1>
-        <p>Your app is running!</p>
+        <hr />
+        <h2>My Clubs</h2>
+        <div id="my-clubs" hx-get={API_ROUTES.MY_CLUBS} hx-trigger="load"></div>
+        <hr />
       </body>
     </html>,
   );

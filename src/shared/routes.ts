@@ -11,4 +11,5 @@ export const API_ROUTES = {
   PING: "/api/public/ping",
   START_CLUB: "/api/private/start-club",
   ADD_RATING: "/api/private/books/add-rating",
+  MY_CLUBS: "/api/private/my-clubs",
 };

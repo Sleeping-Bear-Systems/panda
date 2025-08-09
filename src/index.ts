@@ -7,6 +7,7 @@ import { aboutPage } from "./features/about";
 import { homePage } from "./features/homePage";
 import { loginApi, loginPage } from "./features/login";
 import { logout as logoutApi } from "./features/logout";
+import { myClubsApi } from "./features/myClubs";
 import { startClubApi, startClubPage } from "./features/startClubPage";
 import { appConfig } from "./shared/config";
 import { logger } from "./shared/logger";
@@ -27,6 +28,7 @@ const app = new Hono()
   .route(API_ROUTES.LOGIN, loginApi)
   .route(API_ROUTES.LOGOUT, logoutApi)
   .route(API_ROUTES.START_CLUB, startClubApi)
+  .route(API_ROUTES.MY_CLUBS, myClubsApi)
   // front-end routes
   .route(ROUTES.LOGIN, loginPage)
   .route(ROUTES.ABOUT, aboutPage)
