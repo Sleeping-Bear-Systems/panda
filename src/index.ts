@@ -7,7 +7,7 @@ import { aboutPage } from "./features/about";
 import {
   createAccountApi,
   createAccountPage,
-} from "./features/createAccount/createAccountPage";
+} from "./features/createAccountPage";
 import { homePage } from "./features/homePage";
 import { loginApi, loginPage } from "./features/login";
 import { logout as logoutApi } from "./features/logout";
