@@ -1,10 +1,19 @@
 import { zValidator } from "@hono/zod-validator";
+import { randomUUIDv7 } from "bun";
 import { Hono } from "hono";
 import { z } from "zod/v4";
 
+import { decide } from "../../shared/account/accountCommand";
+import { handler as handle } from "../../shared/account/accountState";
+import { CreateAccount } from "../../shared/account/createAccount";
+import { eventStore } from "../../shared/database";
+import { DefaultDateProvider } from "../../shared/dateProvider";
 import { Head } from "../../shared/head";
 import { API_ROUTES, ROUTES } from "../../shared/routes";
 
+/**
+ * Create Account page endpoint.
+ */
 export const createAccountPage: Hono = new Hono().get("/", (c) => {
   return c.html(
     <html>
@@ -26,25 +35,55 @@ export const createAccountPage: Hono = new Hono().get("/", (c) => {
           <label htmlFor="password">Password</label>
           <input id="password" name="password" type="password" required />
           <button type="submit">Submit</button>
-          <button type="reset">Reset</button>
         </form>
       </body>
     </html>,
   );
 });
 
+/**
+ * Create account request Zod validator.
+ */
 const createAccountRequestSchema = z.object({
-  email: z.string(),
-  username: z.string(),
-  password: z.string(),
+  email: z.string().toLowerCase().trim(),
+  username: z.string().toLowerCase().trim(),
+  password: z.string().trim(),
 });
 
+/**
+ * Create account API endpoint.
+ */
 export const createAccountApi: Hono = new Hono().post(
   "/",
   zValidator("form", createAccountRequestSchema),
-  (c) => {
+  async (c) => {
     const request = c.req.valid("form");
-    console.log(request);
+    const now = DefaultDateProvider();
+    const passwordHash = await Bun.password.hash(request.email, {
+      algorithm: "bcrypt",
+      cost: 10,
+    });
+    const userId = randomUUIDv7("hex", now);
+    const command: CreateAccount = {
+      type: "CreateAccount",
+      data: {
+        userId,
+        email: request.email,
+        username: request.username,
+        passwordHash: passwordHash,
+      },
+      metadata: {
+        userId: "",
+        timestamp: now,
+        correlationId: randomUUIDv7("hex", now),
+      },
+    };
+    const result = await handle(eventStore, userId, (state) =>
+      decide(command, state),
+    );
+    if (result.createdNewStream) {
+      c.redirect(ROUTES.LOGIN);
+    }
     return c.json({}, 400);
   },
 );
