@@ -1,4 +1,4 @@
-import { Command } from "@event-driven-io/emmett/.";
+import { Command } from "@event-driven-io/emmett";
 
 import { ClubEvent } from "./clubEvent";
 import { ClubMetadata } from "./clubMetadata";
