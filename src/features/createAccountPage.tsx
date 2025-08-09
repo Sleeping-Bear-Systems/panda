@@ -52,11 +52,17 @@ export const createAccountPage: Hono = new Hono().get("/", (c) => {
 /**
  * Create account request Zod validator.
  */
-const createAccountRequestSchema = z.object({
-  email: z.email().nonempty().toLowerCase().trim(),
-  username: z.string().nonempty().min(3).toLowerCase().trim(),
-  password: z.string().nonempty().min(12).trim(),
-});
+const createAccountRequestSchema = z
+  .object({
+    email: z.email().nonempty().toLowerCase().trim(),
+    username: z.string().nonempty().min(3).toLowerCase().trim(),
+    password: z.string().nonempty().min(12).trim(),
+    confirmPassword: z.string().nonempty().min(12).trim(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 /**
  * Create account API endpoint.
