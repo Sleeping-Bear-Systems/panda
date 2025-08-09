@@ -4,6 +4,10 @@ import { jwt } from "hono/jwt";
 
 import { addRatingApi } from "./backend/books/addRating";
 import { aboutPage } from "./features/about";
+import {
+  createAccountApi,
+  createAccountPage,
+} from "./features/createAccountPage";
 import { homePage } from "./features/homePage";
 import { loginApi, loginPage } from "./features/login";
 import { logout as logoutApi } from "./features/logout";
@@ -29,11 +33,13 @@ const app = new Hono()
   .route(API_ROUTES.LOGOUT, logoutApi)
   .route(API_ROUTES.START_CLUB, startClubApi)
   .route(API_ROUTES.MY_CLUBS, myClubsApi)
+  .route(API_ROUTES.CREATE_ACCOUNT, createAccountApi)
   // front-end routes
   .route(ROUTES.LOGIN, loginPage)
   .route(ROUTES.ABOUT, aboutPage)
   .route(ROUTES.START_CLUB, startClubPage)
   .route(ROUTES.HOME, homePage)
+  .route(ROUTES.CREATE_ACCOUNT, createAccountPage)
   // static assets
   .use("/*", serveStatic({ root: "./public" }));
 

@@ -23,7 +23,9 @@ export const loginPage = new Hono().get("/", (c) => {
           <label htmlFor="password">Password</label>
           <input id="password" name="password" type="password" required />
           <button type="submit">Submit</button>
+          <button type="reset">Reset</button>
         </form>
+        <a href={ROUTES.CREATE_ACCOUNT}>Create Account</a>
       </body>
     </html>,
   );
@@ -33,8 +35,8 @@ const users: User[] = createTestUsers();
 
 /** The zod validator a login request */
 const loginRequestSchema = z.object({
-  username: z.string().nonempty(),
-  password: z.string().nonempty(),
+  username: z.string().nonempty().toLowerCase().trim(),
+  password: z.string().nonempty().toLowerCase().trim(),
 });
 
 /** Login request */
