@@ -1,4 +1,4 @@
-import { CommandHandler } from "@event-driven-io/emmett/.";
+import { CommandHandler } from "@event-driven-io/emmett";
 
 import { type AccountEvent } from "./accountEvent";
 
