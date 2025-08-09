@@ -34,6 +34,14 @@ export const createAccountPage: Hono = new Hono().get("/", (c) => {
           <input id="username" name="username" type="text" required />
           <label htmlFor="password">Password</label>
           <input id="password" name="password" type="password" required />
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            required
+          />
+
           <button type="submit">Submit</button>
         </form>
       </body>
