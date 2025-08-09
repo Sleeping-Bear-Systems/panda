@@ -1,4 +1,4 @@
-import { Command } from "@event-driven-io/emmett/.";
+import { Command } from "@event-driven-io/emmett";
 
 import { addRating } from "./addRating";
 import { BookEvent } from "./bookEvent";

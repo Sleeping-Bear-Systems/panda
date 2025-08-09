@@ -1,4 +1,4 @@
-import { Command } from "@event-driven-io/emmett/.";
+import { Command } from "@event-driven-io/emmett";
 
 import { type CommandMetadata } from "../commandMetadata";
 import { type AccountEvent } from "./accountEvent";
