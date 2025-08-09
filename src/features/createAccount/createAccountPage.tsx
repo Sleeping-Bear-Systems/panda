@@ -45,9 +45,9 @@ export const createAccountPage: Hono = new Hono().get("/", (c) => {
  * Create account request Zod validator.
  */
 const createAccountRequestSchema = z.object({
-  email: z.string().toLowerCase().trim(),
-  username: z.string().toLowerCase().trim(),
-  password: z.string().trim(),
+  email: z.email().nonempty().toLowerCase().trim(),
+  username: z.string().nonempty().min(3).toLowerCase().trim(),
+  password: z.string().nonempty().min(12).trim(),
 });
 
 /**

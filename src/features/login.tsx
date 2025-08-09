@@ -35,8 +35,8 @@ const users: User[] = createTestUsers();
 
 /** The zod validator a login request */
 const loginRequestSchema = z.object({
-  username: z.string().nonempty(),
-  password: z.string().nonempty(),
+  username: z.string().nonempty().toLowerCase().trim(),
+  password: z.string().nonempty().toLowerCase().trim(),
 });
 
 /** Login request */
