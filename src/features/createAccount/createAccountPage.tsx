@@ -1,4 +1,6 @@
+import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { z } from "zod/v4";
 
 import { Head } from "../../shared/head";
 import { API_ROUTES, ROUTES } from "../../shared/routes";
@@ -31,6 +33,18 @@ export const createAccountPage: Hono = new Hono().get("/", (c) => {
   );
 });
 
-export const createAccountApi: Hono = new Hono().post("/", (c) => {
-  return c.json({}, 400);
+const createAccountRequestSchema = z.object({
+  email: z.string(),
+  username: z.string(),
+  password: z.string(),
 });
+
+export const createAccountApi: Hono = new Hono().post(
+  "/",
+  zValidator("form", createAccountRequestSchema),
+  (c) => {
+    const request = c.req.valid("form");
+    console.log(request);
+    return c.json({}, 400);
+  },
+);
