@@ -41,9 +41,9 @@ export const createAccountPage: Hono = new Hono().get("/", (c) => {
             type="password"
             required
           />
-
           <button type="submit">Submit</button>
         </form>
+        <div id="errors"></div>
       </body>
     </html>,
   );
@@ -69,7 +69,15 @@ const createAccountRequestSchema = z
  */
 export const createAccountApi: Hono = new Hono().post(
   "/",
-  zValidator("form", createAccountRequestSchema),
+  zValidator("form", createAccountRequestSchema, (result, c) => {
+    if (!result.success) {
+      return c.html(
+        <div id="errors" hx-swap-oob="true">
+          Errors
+        </div>,
+      );
+    }
+  }),
   async (c) => {
     const request = c.req.valid("form");
     const now = DefaultDateProvider();
