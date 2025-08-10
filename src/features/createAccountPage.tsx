@@ -1,6 +1,7 @@
 import { zValidator } from "@hono/zod-validator";
 import { randomUUIDv7 } from "bun";
 import { Hono } from "hono";
+import i18next from "i18next";
 import { z } from "zod/v4";
 
 import { decide } from "../shared/account/accountCommand";
@@ -26,7 +27,7 @@ export const createAccountPage: Hono = new Hono().get("/", (c) => {
           <h1>Create Account</h1>
         </header>
         <form action={API_ROUTES.CREATE_ACCOUNT} method="post">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">{i18next.t("Email")}</label>
           <input id="email" name="email" type="email" required />
           <label htmlFor="username">Username</label>
           <input id="username" name="username" type="text" required />
