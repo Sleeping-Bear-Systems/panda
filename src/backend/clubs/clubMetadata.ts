@@ -1,5 +1,5 @@
 export type ClubMetadata = {
-  userId: string;
+  accountId: string;
   timestamp: Date;
   correlationId: string;
 };

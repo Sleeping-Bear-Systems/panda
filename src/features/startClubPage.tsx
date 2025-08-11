@@ -60,7 +60,7 @@ export const startClubApi = new Hono()
         isPublic,
       },
       metadata: {
-        userId: sub,
+        accountId: sub,
         timestamp: now,
         correlationId: Bun.randomUUIDv7("hex", now),
       },

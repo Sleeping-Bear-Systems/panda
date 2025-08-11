@@ -21,7 +21,7 @@ export function joinClub(command: JoinClub, state: ClubState): ClubEvent[] {
   if (
     state.status != "Started" ||
     state.id != command.data.id ||
-    state.members.has(command.metadata.userId)
+    state.members.has(command.metadata.accountId)
   ) {
     return [];
   }

@@ -6,7 +6,7 @@ import { evolve, initialState } from "./clubState";
 
 const given = DeciderSpecification.for({ decide, evolve, initialState });
 const metadata = {
-  userId: "userId",
+  accountId: "accountId",
   timestamp: new Date(2025, 6, 27),
   correlationId: "123",
 };

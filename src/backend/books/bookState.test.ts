@@ -45,7 +45,7 @@ describe("evolve()", () => {
         isbn: "1234567890123",
         rating: 5,
         reason: "reason",
-        userId: "userId",
+        accountId: "accountId",
       },
     };
     const state = evolve(initial, event);
@@ -55,7 +55,7 @@ describe("evolve()", () => {
       title: initial.title,
       year: initial.year,
       ratings: new Map<string, BookRating>([
-        ["userId", { rating: 5, reason: "reason" }],
+        ["accountId", { rating: 5, reason: "reason" }],
       ]),
     });
   });
@@ -67,7 +67,7 @@ describe("evolve()", () => {
       title: "title",
       year: 2025,
       ratings: new Map<string, BookRating>([
-        ["userId", { rating: 5, reason: "reason" }],
+        ["accountId", { rating: 5, reason: "reason" }],
       ]),
     };
     const event: RatingAdded = {
@@ -76,7 +76,7 @@ describe("evolve()", () => {
         isbn: "1234567890123",
         rating: 1,
         reason: "new reason",
-        userId: "userId",
+        accountId: "accountId",
       },
     };
     const state = evolve(initial, event);
@@ -86,7 +86,7 @@ describe("evolve()", () => {
       title: initial.title,
       year: initial.year,
       ratings: new Map<string, BookRating>([
-        ["userId", { rating: 1, reason: "new reason" }],
+        ["accountId", { rating: 1, reason: "new reason" }],
       ]),
     });
   });
@@ -98,7 +98,7 @@ describe("evolve()", () => {
       title: "title",
       year: 2025,
       ratings: new Map<string, BookRating>([
-        ["userId", { rating: 5, reason: "reason" }],
+        ["accountId", { rating: 5, reason: "reason" }],
       ]),
     };
     const event: RatingRemoved = {
@@ -106,7 +106,7 @@ describe("evolve()", () => {
       data: {
         isbn: "1234567890123",
         reason: "new reason",
-        userId: "userId",
+        accountId: "accountId",
       },
     };
     const state = evolve(initial, event);

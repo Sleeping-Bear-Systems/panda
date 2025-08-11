@@ -12,7 +12,7 @@ export function leaveClub(command: LeaveClub, state: ClubState): ClubEvent[] {
   if (
     state.status == "Unknown" ||
     state.id != command.data.id ||
-    !state.members.has(command.metadata.userId)
+    !state.members.has(command.metadata.accountId)
   ) {
     return [];
   }

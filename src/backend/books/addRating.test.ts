@@ -32,7 +32,7 @@ describe("addRating()", () => {
           isbn: "1234567890123",
           rating: 5,
           reason: "reason",
-          userId: "userId",
+          accountId: "accountId",
         },
       })
       .then([]);
@@ -46,7 +46,7 @@ describe("addRating()", () => {
         isbn: "1234567890123",
         rating: 5,
         reason: "reason",
-        userId: "userId",
+        accountId: "accountId",
       },
     };
     const events = addRating(command, state);
@@ -67,7 +67,7 @@ describe("addRating()", () => {
         isbn: "2345678901234",
         rating: 5,
         reason: "reason",
-        userId: "userId",
+        accountId: "accountId",
       },
     };
     const events = addRating(command, state);
@@ -88,7 +88,7 @@ describe("addRating()", () => {
         isbn: "1234567890123",
         rating: 5,
         reason: "reason",
-        userId: "userId",
+        accountId: "accountId",
       },
     };
     const events = addRating(command, state);
@@ -99,7 +99,7 @@ describe("addRating()", () => {
         isbn: command.data.isbn,
         rating: command.data.rating,
         reason: command.data.reason,
-        userId: command.data.userId,
+        accountId: command.data.accountId,
       },
     });
   });

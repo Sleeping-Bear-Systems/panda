@@ -38,7 +38,7 @@ export function evolve(state: BookState, event: BookEvent): BookState {
     switch (event.type) {
       case "RatingAdded": {
         const ratings = new Map<string, BookRating>(state.ratings);
-        ratings.set(event.data.userId, {
+        ratings.set(event.data.accountId, {
           rating: event.data.rating,
           reason: event.data.reason,
         });
@@ -49,7 +49,7 @@ export function evolve(state: BookState, event: BookEvent): BookState {
       }
       case "RatingRemoved": {
         const ratings = new Map<string, BookRating>(state.ratings);
-        ratings.delete(event.data.userId);
+        ratings.delete(event.data.accountId);
         return {
           ...state,
           ratings,

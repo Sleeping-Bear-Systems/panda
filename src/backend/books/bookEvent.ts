@@ -9,13 +9,13 @@ export type BookRecommended = Event<
 /** Rating added event. */
 export type RatingAdded = Event<
   "RatingAdded",
-  { isbn: string; rating: number; reason: string; userId: string }
+  { isbn: string; rating: number; reason: string; accountId: string }
 >;
 
 /** Rating removed event. */
 export type RatingRemoved = Event<
   "RatingRemoved",
-  { isbn: string; reason: string; userId: string }
+  { isbn: string; reason: string; accountId: string }
 >;
 
 /** Book event. */

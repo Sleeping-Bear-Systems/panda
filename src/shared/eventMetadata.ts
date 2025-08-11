@@ -1,5 +1,5 @@
 export type EventMetadata = {
-  userId: string;
+  accountId: string;
   timestamp: Date;
   correlationId: string;
 };
