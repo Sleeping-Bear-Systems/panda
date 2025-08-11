@@ -3,6 +3,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "debug": "bun run --hot --inspect src/index.ts",
     "dev": "bun run --hot src/index.ts",
     "fix": "bun lint:fix && bun format:fix",
     "format:fix": "bunx prettier . --write",
