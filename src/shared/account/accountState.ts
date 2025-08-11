@@ -5,7 +5,15 @@ import { type AccountEvent } from "./accountEvent";
 /**
  * Account state.
  */
-export type AccountState = { status: "Unknown" } | { status: "Active" };
+export type AccountState =
+  | { status: "Unknown" }
+  | {
+      status: "Active";
+      userId: string;
+      email: string;
+      username: string;
+      passwordHash: string;
+    };
 
 /**
  * Initial state function
@@ -21,7 +29,13 @@ export function evolve(state: AccountState, event: AccountEvent): AccountState {
   switch (state.status) {
     case "Unknown":
       if (event.type == "AccountCreated") {
-        return state;
+        return {
+          status: "Active",
+          userId: event.data.userId,
+          email: event.data.email,
+          username: event.data.username,
+          passwordHash: event.data.passwordHash,
+        };
       }
       break;
     case "Active":
