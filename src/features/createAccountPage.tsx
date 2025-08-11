@@ -4,7 +4,7 @@ import { Hono } from "hono";
 import { z } from "zod/v4";
 
 import { decide } from "../shared/account/accountCommand";
-import { handler as handle } from "../shared/account/accountState";
+import { handle as handle } from "../shared/account/accountState";
 import { CreateAccount } from "../shared/account/createAccount";
 import { eventStore } from "../shared/database";
 import { DefaultDateProvider } from "../shared/dateProvider";

@@ -47,7 +47,7 @@ export function evolve(state: AccountState, event: AccountEvent): AccountState {
 /**
  * Command handler.
  */
-export const handler = CommandHandler({ evolve, initialState });
+export const handle = CommandHandler({ evolve, initialState });
 
 /**
  * Map to stream ID function.
