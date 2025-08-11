@@ -16,7 +16,7 @@ export function removeRating(
       data: {
         isbn: command.data.isbn,
         reason: command.data.reason,
-        userId: command.data.userId,
+        accountId: command.data.accountId,
       },
     },
   ];

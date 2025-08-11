@@ -1,5 +1,5 @@
 export type CommandMetadata = {
-  userId: string;
+  accountId: string;
   timestamp: Date;
   correlationId: string;
 };

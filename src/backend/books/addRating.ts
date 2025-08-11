@@ -18,7 +18,7 @@ export function addRating(command: AddRating, state: BookState): BookEvent[] {
         isbn: command.data.isbn,
         rating: command.data.rating,
         reason: command.data.reason,
-        userId: command.data.userId,
+        accountId: command.data.accountId,
       },
     },
   ];
@@ -28,7 +28,7 @@ const addRatingRequestSchema = z.object({
   isbn: z.string(),
   rating: z.number().min(0).max(5),
   reason: z.string().optional(),
-  userId: z.string().nonempty(),
+  accountId: z.string().nonempty(),
 });
 
 type AddRatingRequest = z.infer<typeof addRatingRequestSchema>;
@@ -44,7 +44,7 @@ export const addRatingApi = new Hono().post(
         isbn: request.isbn,
         rating: request.rating,
         reason: request.reason ?? "",
-        userId: request.userId,
+        accountId: request.accountId,
       },
     };
     console.log(command);

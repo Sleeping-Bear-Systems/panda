@@ -83,22 +83,22 @@ export const createAccountApi: Hono = new Hono().post(
       algorithm: "bcrypt",
       cost: 10,
     });
-    const userId = randomUUIDv7("hex", now);
+    const accountId = randomUUIDv7("hex", now);
     const command: CreateAccount = {
       type: "CreateAccount",
       data: {
-        userId,
+        accountId,
         email: request.email,
         username: request.username,
         passwordHash: passwordHash,
       },
       metadata: {
-        userId: "",
+        accountId: "",
         timestamp: now,
         correlationId: randomUUIDv7("hex", now),
       },
     };
-    const result = await handle(eventStore, userId, (state) =>
+    const result = await handle(eventStore, accountId, (state) =>
       decide(command, state),
     );
     if (result.createdNewStream) {

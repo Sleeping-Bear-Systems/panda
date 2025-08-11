@@ -10,7 +10,7 @@ import { type AccountState } from "./accountState";
 export type CreateAccount = Command<
   "CreateAccount",
   {
-    userId: string;
+    accountId: string;
     email: string;
     username: string;
     passwordHash: string;
@@ -32,13 +32,13 @@ export function createAccount(
     {
       type: "AccountCreated",
       data: {
-        userId: command.data.userId,
+        accountId: command.data.accountId,
         email: command.data.email,
         username: command.data.username,
         passwordHash: command.data.passwordHash,
       },
       metadata: {
-        userId: command.metadata.userId,
+        accountId: command.metadata.accountId,
         timestamp: command.metadata.timestamp,
         correlationId: command.metadata.correlationId,
       },

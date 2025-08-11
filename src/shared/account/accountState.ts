@@ -9,7 +9,7 @@ export type AccountState =
   | { status: "Unknown" }
   | {
       status: "Active";
-      userId: string;
+      accountId: string;
       email: string;
       username: string;
       passwordHash: string;
@@ -31,7 +31,7 @@ export function evolve(state: AccountState, event: AccountEvent): AccountState {
       if (event.type == "AccountCreated") {
         return {
           status: "Active",
-          userId: event.data.userId,
+          accountId: event.data.accountId,
           email: event.data.email,
           username: event.data.username,
           passwordHash: event.data.passwordHash,

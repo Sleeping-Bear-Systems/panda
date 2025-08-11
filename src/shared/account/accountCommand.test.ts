@@ -13,13 +13,13 @@ describe("Unknown", () => {
       .when({
         type: "CreateAccount",
         data: {
-          userId: "1234",
+          accountId: "1234",
           email: "test@localhost",
           username: "test_user",
           passwordHash: "1234",
         },
         metadata: {
-          userId: "",
+          accountId: "",
           correlationId: "2468",
           timestamp: now,
         },
@@ -27,13 +27,13 @@ describe("Unknown", () => {
       .then({
         type: "AccountCreated",
         data: {
-          userId: "1234",
+          accountId: "1234",
           email: "test@localhost",
           username: "test_user",
           passwordHash: "1234",
         },
         metadata: {
-          userId: "",
+          accountId: "",
           correlationId: "2468",
           timestamp: now,
         },

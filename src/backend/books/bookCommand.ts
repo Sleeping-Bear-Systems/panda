@@ -12,7 +12,7 @@ export type AddRating = Command<
     isbn: string;
     rating: number;
     reason: string;
-    userId: string;
+    accountId: string;
   }
 >;
 
@@ -28,7 +28,7 @@ export type RemoveRating = Command<
   {
     isbn: string;
     reason: string;
-    userId: string;
+    accountId: string;
   }
 >;
 

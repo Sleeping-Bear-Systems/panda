@@ -53,7 +53,7 @@ export function evolve(state: ClubState, event: ClubEvent): ClubState {
       };
     } else if (event.type == "ClubJoined" && event.data.id == state.id) {
       const members = new Map<string, MemberState>(state.members);
-      members.set(event.metadata.userId, {
+      members.set(event.metadata.accountId, {
         role: event.data.role,
         status: event.data.status,
       });
@@ -63,7 +63,7 @@ export function evolve(state: ClubState, event: ClubEvent): ClubState {
       };
     } else if (event.type == "ClubLeft" && event.data.id == state.id) {
       const members = new Map<string, MemberState>(state.members);
-      members.delete(event.metadata.userId);
+      members.delete(event.metadata.accountId);
       return {
         ...state,
         members,

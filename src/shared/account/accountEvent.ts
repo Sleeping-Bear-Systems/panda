@@ -8,7 +8,7 @@ import { type EventMetadata } from "../eventMetadata";
 export type AccountCreated = Event<
   "AccountCreated",
   {
-    userId: string;
+    accountId: string;
     email: string;
     username: string;
     passwordHash: string;
