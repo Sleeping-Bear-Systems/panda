@@ -5,7 +5,12 @@ import { setCookie } from "hono/cookie";
 import { sign } from "hono/jwt";
 import { z } from "zod/v4";
 
+import {
+  Account,
+  accountsCollectionName,
+} from "../shared/account/accountsProjection";
 import { appConfig } from "../shared/config";
+import { pongo } from "../shared/database";
 import { DefaultDateProvider } from "../shared/dateProvider";
 import { Head } from "../shared/head";
 import { logger } from "../shared/logger";
@@ -23,15 +28,12 @@ export const loginPage = new Hono().get("/", (c) => {
           <label htmlFor="password">Password</label>
           <input id="password" name="password" type="password" required />
           <button type="submit">Submit</button>
-          <button type="reset">Reset</button>
         </form>
         <a href={ROUTES.CREATE_ACCOUNT}>Create Account</a>
       </body>
     </html>,
   );
 });
-
-const users: User[] = createTestUsers();
 
 /** The zod validator a login request */
 const loginRequestSchema = z.object({
@@ -48,17 +50,17 @@ export const loginApi = new Hono().post(
   zValidator("form", loginRequestSchema),
   async (c) => {
     const { username, password } = c.req.valid("form");
-    const lowercaseUsername = username.toLocaleLowerCase();
-    const user = users.find(
-      (u) => u.username.toLocaleLowerCase() == lowercaseUsername,
-    );
-    if (!user) {
+    const account = await pongo
+      .db()
+      .collection<Account>(accountsCollectionName)
+      .findOne({ username });
+    if (!account) {
       logger.info("User not found: '%s'", username);
       return c.text("Invalid username or password", 401);
     }
     const isValidPassword = await Bun.password.verify(
       password,
-      user.passwordHash,
+      account.passwordHash,
       "bcrypt",
     );
     if (!isValidPassword) {
@@ -67,9 +69,10 @@ export const loginApi = new Hono().post(
     }
     const token = await sign(
       {
-        sub: user.id,
-        preferred_username: user.username,
-        role: user.role,
+        sub: account.accountId,
+        preferred_username: account.username,
+        email: account.email,
+        role: account.role,
         iss: "panda",
         exp: Math.floor(addDays(DefaultDateProvider(), 1).getTime() / 1000),
         iat: Math.floor(Date.now() / 1000),
@@ -86,44 +89,3 @@ export const loginApi = new Hono().post(
     return c.redirect(ROUTES.HOME);
   },
 );
-
-function createTestUsers(): User[] {
-  return [
-    {
-      id: "cc57350b-f778-4563-b214-0f9a1d5bc0d9",
-      username: "admin",
-      passwordHash: Bun.password.hashSync("password1234", {
-        algorithm: "bcrypt",
-        cost: 10,
-      }),
-      role: "Administrator",
-    },
-    {
-      id: "97dfe0c4-b01e-4fbf-a6df-9deb9287502c",
-      username: "user",
-      passwordHash: Bun.password.hashSync("password1234", {
-        algorithm: "bcrypt",
-        cost: 10,
-      }),
-      role: "General",
-    },
-    {
-      id: "44298c16-7e50-4966-abbc-f653679db543",
-      username: "guest",
-      passwordHash: Bun.password.hashSync("password1234", {
-        algorithm: "bcrypt",
-        cost: 10,
-      }),
-      role: "Guest",
-    },
-  ];
-}
-
-export type Role = "Administrator" | "General" | "Guest";
-
-type User = {
-  id: string;
-  username: string;
-  passwordHash: string;
-  role: Role;
-};

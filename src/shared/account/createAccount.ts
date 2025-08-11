@@ -1,7 +1,7 @@
 import { Command } from "@event-driven-io/emmett";
 
 import { type CommandMetadata } from "../commandMetadata";
-import { type AccountEvent } from "./accountEvent";
+import { type AccountEvent, AccountRole } from "./accountEvent";
 import { type AccountState } from "./accountState";
 
 /**
@@ -14,6 +14,7 @@ export type CreateAccount = Command<
     email: string;
     username: string;
     passwordHash: string;
+    role: AccountRole;
   },
   CommandMetadata
 >;
@@ -36,6 +37,7 @@ export function createAccount(
         email: command.data.email,
         username: command.data.username,
         passwordHash: command.data.passwordHash,
+        role: command.data.role,
       },
       metadata: {
         accountId: command.metadata.accountId,
