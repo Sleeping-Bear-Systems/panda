@@ -17,6 +17,18 @@ export type AccountCreated = Event<
 >;
 
 /**
+ * Password changed event.
+ */
+export type PasswordChanged = Event<
+  "PasswordChanged",
+  {
+    accountId: string;
+    passwordHash: string;
+  },
+  EventMetadata
+>;
+
+/**
  * Account event.
  */
-export type AccountEvent = AccountCreated;
+export type AccountEvent = AccountCreated | PasswordChanged;
