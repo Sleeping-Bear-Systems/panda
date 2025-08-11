@@ -3,6 +3,11 @@ import { type Event } from "@event-driven-io/emmett";
 import { type EventMetadata } from "../eventMetadata";
 
 /**
+ * Account roles.
+ */
+export type AccountRole = "Admin" | "Standard";
+
+/**
  * Account created event.
  */
 export type AccountCreated = Event<
@@ -12,6 +17,7 @@ export type AccountCreated = Event<
     email: string;
     username: string;
     passwordHash: string;
+    role: AccountRole;
   },
   EventMetadata
 >;

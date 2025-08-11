@@ -91,6 +91,7 @@ export const createAccountApi: Hono = new Hono().post(
         email: request.email,
         username: request.username,
         passwordHash: passwordHash,
+        role: "Standard",
       },
       metadata: {
         accountId: "",

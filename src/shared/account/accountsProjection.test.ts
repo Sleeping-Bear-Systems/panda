@@ -8,6 +8,7 @@ const existingAccount: Account = {
   email: "user@example.com",
   username: "test-user",
   passwordHash: "hash123",
+  role: "Standard",
 };
 
 const metadata = {
@@ -25,6 +26,7 @@ describe("accountsProjection evolve", () => {
         email: "new@example.com",
         username: "new-user",
         passwordHash: "new-hash",
+        role: "Standard",
       },
       metadata: {
         accountId: "user-2",
@@ -38,6 +40,7 @@ describe("accountsProjection evolve", () => {
       email: "new@example.com",
       username: "new-user",
       passwordHash: "new-hash",
+      role: "Standard",
     });
   });
 

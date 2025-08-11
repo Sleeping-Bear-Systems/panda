@@ -5,7 +5,7 @@ import { AccountEvent } from "./accountEvent";
 /**
  * Accounts collection.
  */
-const accountsCollectionName = "Accounts";
+export const accountsCollectionName = "Accounts";
 
 /**
  * Account.
@@ -15,6 +15,7 @@ export type Account = {
   email: string;
   username: string;
   passwordHash: string;
+  role: string;
 };
 
 /**
@@ -37,6 +38,7 @@ export function evolve(
           email: data.email,
           username: data.username,
           passwordHash: data.passwordHash,
+          role: data.role,
         };
     }
   }

@@ -1,6 +1,6 @@
 import { CommandHandler } from "@event-driven-io/emmett";
 
-import { type AccountEvent } from "./accountEvent";
+import { type AccountEvent, AccountRole } from "./accountEvent";
 
 /**
  * Account state.
@@ -13,6 +13,7 @@ export type AccountState =
       email: string;
       username: string;
       passwordHash: string;
+      role: AccountRole;
     };
 
 /**
@@ -35,6 +36,7 @@ export function evolve(state: AccountState, event: AccountEvent): AccountState {
           email: event.data.email,
           username: event.data.username,
           passwordHash: event.data.passwordHash,
+          role: event.data.role,
         };
       }
       break;

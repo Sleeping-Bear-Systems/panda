@@ -17,6 +17,7 @@ describe("Unknown", () => {
           email: "test@localhost",
           username: "test_user",
           passwordHash: "1234",
+          role: "Standard",
         },
         metadata: {
           accountId: "",
@@ -31,6 +32,7 @@ describe("Unknown", () => {
           email: "test@localhost",
           username: "test_user",
           passwordHash: "1234",
+          role: "Standard",
         },
         metadata: {
           accountId: "",
