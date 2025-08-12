@@ -13,6 +13,7 @@ export const homePage = new Hono().use("/", pageJwt).get("/", (c) => {
         <nav>
           <a href={ROUTES.ABOUT}>About</a>
           <a href="/start-club">Start Club</a>
+          <a href="/change-password">Change Password</a>
           <button
             hx-post={API_ROUTES.LOGOUT}
             hx-include="none"

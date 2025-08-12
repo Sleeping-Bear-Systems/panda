@@ -1,12 +1,16 @@
 import { type AccountEvent } from "./accountEvent";
 import { type AccountState } from "./accountState";
+import { ChangePassword, changePassword } from "./changePassword";
 import { type CreateAccount, createAccount } from "./createAccount";
 
 /**
  * Account command.
  */
-export type AccountCommand = CreateAccount;
+export type AccountCommand = CreateAccount | ChangePassword;
 
+/**
+ * Decide function.
+ */
 export function decide(
   command: AccountCommand,
   state: AccountState,
@@ -14,6 +18,9 @@ export function decide(
   switch (command.type) {
     case "CreateAccount":
       return createAccount(command, state);
+    case "ChangePassword":
+      return changePassword(command, state);
+    default:
+      return [];
   }
-  return [];
 }

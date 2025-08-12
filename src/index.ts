@@ -5,6 +5,10 @@ import { jwt } from "hono/jwt";
 import { addRatingApi } from "./backend/books/addRating";
 import { aboutPage } from "./features/about";
 import {
+  changePasswordApi,
+  changePasswordPage,
+} from "./features/changePasswordPage";
+import {
   createAccountApi,
   createAccountPage,
 } from "./features/createAccountPage";
@@ -21,7 +25,7 @@ logger.info("🚀 Starting application");
 
 const app = new Hono()
   .use(
-    "/api/private",
+    "/api/private/*",
     jwt({ secret: appConfig.JWT_SECRET, cookie: appConfig.jwtCookieName }),
   )
   // back-end routes
@@ -34,12 +38,14 @@ const app = new Hono()
   .route(API_ROUTES.START_CLUB, startClubApi)
   .route(API_ROUTES.MY_CLUBS, myClubsApi)
   .route(API_ROUTES.CREATE_ACCOUNT, createAccountApi)
+  .route(API_ROUTES.CHANGE_PASSWORD, changePasswordApi)
   // front-end routes
   .route(ROUTES.LOGIN, loginPage)
   .route(ROUTES.ABOUT, aboutPage)
   .route(ROUTES.START_CLUB, startClubPage)
   .route(ROUTES.HOME, homePage)
   .route(ROUTES.CREATE_ACCOUNT, createAccountPage)
+  .route(ROUTES.CHANGE_PASSWORD, changePasswordPage)
   // static assets
   .use("/*", serveStatic({ root: "./public" }));
 
