@@ -27,11 +27,29 @@ export const createAccountPage: Hono = new Hono().get("/", (c) => {
         </header>
         <form action={API_ROUTES.CREATE_ACCOUNT} method="post">
           <label htmlFor="email">Email</label>
-          <input id="email" name="email" type="email" required />
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            autocomplete="email"
+          />
           <label htmlFor="username">Username</label>
-          <input id="username" name="username" type="text" required />
+          <input
+            id="username"
+            name="username"
+            type="text"
+            required
+            autocomplete="username"
+          />
           <label htmlFor="password">Password</label>
-          <input id="password" name="password" type="password" required />
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            autocomplete="new-password"
+          />
           <label htmlFor="confirmPassword">Confirm Password</label>
           <input
             id="confirmPassword"
@@ -94,7 +112,7 @@ export const createAccountApi: Hono = new Hono().post(
         role: "Standard",
       },
       metadata: {
-        accountId: "",
+        accountId,
         timestamp: now,
         correlationId: randomUUIDv7("hex", now),
       },
