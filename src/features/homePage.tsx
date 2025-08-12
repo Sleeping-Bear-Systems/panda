@@ -12,8 +12,7 @@ export const homePage = new Hono().use("/", pageJwt).get("/", (c) => {
         <img src="/images/sleeping_bear_logo.svg" alt="Sleeping Bear Logo" />
         <nav>
           <a href={ROUTES.ABOUT}>About</a>
-          <a href="/start-club">Start Club</a>
-          <a href="/change-password">Change Password</a>
+          <a href={ROUTES.CHANGE_PASSWORD}>Change Password</a>
           <button
             hx-post={API_ROUTES.LOGOUT}
             hx-include="none"
@@ -24,8 +23,7 @@ export const homePage = new Hono().use("/", pageJwt).get("/", (c) => {
           </button>
         </nav>
         <hr />
-        <h2>My Clubs</h2>
-        <div id="my-clubs" hx-get={API_ROUTES.MY_CLUBS} hx-trigger="load"></div>
+        <h2>Under Construction</h2>
         <hr />
       </body>
     </html>,
