@@ -24,9 +24,21 @@ export const loginPage = new Hono().get("/", (c) => {
         <h1>Login</h1>
         <form action={API_ROUTES.LOGIN} method="post">
           <label htmlFor="username">Username</label>
-          <input id="username" name="username" type="text" required />
+          <input
+            id="username"
+            name="username"
+            type="text"
+            required
+            autocomplete="username"
+          />
           <label htmlFor="password">Password</label>
-          <input id="password" name="password" type="password" required />
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            autocomplete="current-password"
+          />
           <button type="submit">Submit</button>
         </form>
         <a href={ROUTES.CREATE_ACCOUNT}>Create Account</a>
