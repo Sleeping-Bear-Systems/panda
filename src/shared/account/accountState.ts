@@ -17,14 +17,14 @@ export type AccountState =
     };
 
 /**
- * Initial state function
+ * Initial state function for accounts.
  */
 export function initialState(): AccountState {
   return { status: "Unknown" };
 }
 
 /**
- * Evolve function.
+ * Evolve function for accounts.
  */
 export function evolve(state: AccountState, event: AccountEvent): AccountState {
   switch (state.status) {
@@ -41,19 +41,28 @@ export function evolve(state: AccountState, event: AccountEvent): AccountState {
       }
       break;
     case "Active":
-      return state;
+      if (
+        event.type == "PasswordChanged" &&
+        state.accountId == event.data.accountId
+      ) {
+        return {
+          ...state,
+          passwordHash: event.data.passwordHash,
+        };
+      }
+      break;
   }
   return state;
 }
 
 /**
- * Command handler.
- */
-export const handle = CommandHandler({ evolve, initialState });
-
-/**
- * Map to stream ID function.
+ * Map to stream ID function for account streams.
  */
 export function mapToStreamId(id: string): string {
   return `account-${id}`;
 }
+
+/**
+ * Command handler for accounts.
+ */
+export const handle = CommandHandler({ evolve, initialState, mapToStreamId });

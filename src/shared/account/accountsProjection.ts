@@ -52,5 +52,5 @@ export const accountsProjection = pongoMultiStreamProjection({
   collectionName: accountsCollectionName,
   getDocumentId: (event) => event.data.accountId,
   evolve,
-  canHandle: ["AccountCreated"],
+  canHandle: ["AccountCreated", "PasswordChanged"],
 });
