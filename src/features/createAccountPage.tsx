@@ -56,6 +56,7 @@ export const createAccountPage: Hono = new Hono().get("/", (c) => {
             name="confirmPassword"
             type="password"
             required
+            autocomplete="new-password"
           />
           <button type="submit">Submit</button>
         </form>
