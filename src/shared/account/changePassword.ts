@@ -1,8 +1,9 @@
-import { Command, IllegalStateError } from "@event-driven-io/emmett";
+import type { Command } from "@event-driven-io/emmett";
+import { IllegalStateError } from "@event-driven-io/emmett";
 
-import { CommandMetadata } from "../commandMetadata";
-import { AccountEvent } from "./accountEvent";
-import { AccountState } from "./accountState";
+import type { CommandMetadata } from "../commandMetadata";
+import type { AccountEvent } from "./accountEvent";
+import type { AccountState } from "./accountState";
 
 /**
  * Change password command.

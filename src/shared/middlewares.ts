@@ -1,27 +1,45 @@
-import { Context, Next } from "hono";
-import { getCookie } from "hono/cookie";
 import { createMiddleware } from "hono/factory";
-import { verify } from "hono/jwt";
+import type { JwtVariables } from "hono/jwt";
+import { jwt } from "hono/jwt";
 
 import { appConfig } from "./config";
 import { logger } from "./logger";
 import { ROUTES } from "./routes";
 
-/** Page JWT middleware */
-export const pageJwt = createMiddleware(async (c: Context, next: Next) => {
+/**
+ * API JWT middleware.
+ */
+export const apiJwt = createMiddleware(async (c, next) => {
+  return await jwt({
+    secret: appConfig.JWT_SECRET,
+    cookie: appConfig.jwtCookieName,
+  })(c, next);
+});
+
+/**
+ * Page JWT middleware.
+ */
+export const pageJwt = createMiddleware(async (c, next) => {
   try {
-    const token = getCookie(c, appConfig.jwtCookieName);
-    if (!token) {
-      return c.redirect(ROUTES.LOGIN, 302);
-    }
-    const payload = await verify(token, appConfig.JWT_SECRET);
-    if (!payload) {
-      return c.redirect(ROUTES.LOGIN, 302);
-    }
-    c.set("jwtPayload", payload);
-    await next();
+    return await jwt({
+      secret: appConfig.JWT_SECRET,
+      cookie: appConfig.jwtCookieName,
+    })(c, next);
   } catch (error) {
     logger.error(error);
-    return c.json({}, 401);
+    return c.redirect(ROUTES.LOGIN, 302);
   }
 });
+
+/**
+ * Hono variable supporting the JWT payload.
+ */
+export type PandaJwtVariables = JwtVariables<{
+  sub: string;
+  preferred_username: string;
+  email: string;
+  role: string;
+  iss: string;
+  exp: number;
+  iat: number;
+}>;

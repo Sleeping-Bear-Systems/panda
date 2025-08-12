@@ -1,6 +1,6 @@
 import { pongoMultiStreamProjection } from "@event-driven-io/emmett-postgresql";
 
-import { AccountEvent } from "./accountEvent";
+import type { AccountEvent } from "./accountEvent";
 
 /**
  * Accounts collection.

@@ -1,6 +1,7 @@
 import { CommandHandler } from "@event-driven-io/emmett";
 
-import { type AccountEvent, AccountRole } from "./accountEvent";
+import type { AccountRole } from "./accountEvent";
+import { type AccountEvent } from "./accountEvent";
 
 /**
  * Account state.

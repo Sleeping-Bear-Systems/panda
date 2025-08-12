@@ -1,7 +1,8 @@
-import { Command } from "@event-driven-io/emmett";
+import type { Command } from "@event-driven-io/emmett";
 
 import { type CommandMetadata } from "../commandMetadata";
-import { type AccountEvent, AccountRole } from "./accountEvent";
+import type { AccountRole } from "./accountEvent";
+import { type AccountEvent } from "./accountEvent";
 import { type AccountState } from "./accountState";
 
 /**

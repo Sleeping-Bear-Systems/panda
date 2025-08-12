@@ -5,51 +5,54 @@ import { z } from "zod/v4";
 
 import { decide } from "../shared/account/accountCommand";
 import { handle } from "../shared/account/accountState";
-import { ChangePassword } from "../shared/account/changePassword";
+import type { ChangePassword } from "../shared/account/changePassword";
 import { eventStore } from "../shared/database";
 import { DefaultDateProvider } from "../shared/dateProvider";
 import { Head } from "../shared/head";
-import { pageJwt } from "../shared/middlewares";
+import type { PandaJwtVariables } from "../shared/middlewares";
+import { apiJwt, pageJwt } from "../shared/middlewares";
 import { API_ROUTES, ROUTES } from "../shared/routes";
 
 /**
  * Change password page.
  */
-export const changePasswordPage = new Hono().use("/", pageJwt).get("/", (c) => {
-  return c.html(
-    <html>
-      <Head />
-      <body>
-        <nav>
-          <a href={ROUTES.HOME}>Home</a>
-        </nav>
-        <header>
-          <h1>Change Password</h1>
-        </header>
-        <form action={API_ROUTES.CHANGE_PASSWORD} method="post">
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            required
-            autocomplete="new-password"
-          />
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            id="confirmPassword"
-            name="confirmPassword"
-            type="password"
-            required
-            autocomplete="new-password"
-          />
-          <button type="submit">Submit</button>
-        </form>
-        <div id="errors"></div>
-      </body>
-    </html>,
-  );
-});
+export const changePasswordPage = new Hono<{ Variables: PandaJwtVariables }>()
+  .use("/", pageJwt)
+  .get("/", (c) => {
+    return c.html(
+      <html>
+        <Head />
+        <body>
+          <nav>
+            <a href={ROUTES.HOME}>Home</a>
+          </nav>
+          <header>
+            <h1>Change Password</h1>
+          </header>
+          <form action={API_ROUTES.CHANGE_PASSWORD} method="post">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              autocomplete="new-password"
+            />
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              required
+              autocomplete="new-password"
+            />
+            <button type="submit">Submit</button>
+          </form>
+          <div id="errors"></div>
+        </body>
+      </html>,
+    );
+  });
 
 /**
  * Change password request schema.
@@ -67,10 +70,9 @@ const changPasswordRequestSchema = z
 /**
  * Change password API.
  */
-export const changePasswordApi = new Hono().post(
-  "/",
-  zValidator("form", changPasswordRequestSchema),
-  async (c) => {
+export const changePasswordApi = new Hono<{ Variables: PandaJwtVariables }>()
+  .use("/", apiJwt)
+  .post("/", zValidator("form", changPasswordRequestSchema), async (c) => {
     const accountId = c.get("jwtPayload").sub;
     const { password } = c.req.valid("form");
     const now = DefaultDateProvider();
@@ -92,5 +94,4 @@ export const changePasswordApi = new Hono().post(
     };
     await handle(eventStore, accountId, (state) => decide(command, state));
     return c.redirect(ROUTES.HOME);
-  },
-);
+  });
