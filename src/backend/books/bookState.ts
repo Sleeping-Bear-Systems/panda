@@ -34,7 +34,7 @@ export function evolve(state: BookState, event: BookEvent): BookState {
           ratings: new Map<string, BookRating>(),
         };
     }
-  } else if (state.status == "Recommended" && state.isbn == event.data.isbn) {
+  } else if (state.isbn == event.data.isbn) {
     switch (event.type) {
       case "RatingAdded": {
         const ratings = new Map<string, BookRating>(state.ratings);
