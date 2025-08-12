@@ -5,11 +5,8 @@ import { setCookie } from "hono/cookie";
 import { sign } from "hono/jwt";
 import { z } from "zod/v4";
 
-import type {
-  Account} from "../shared/account/accountsProjection";
-import {
-  accountsCollectionName,
-} from "../shared/account/accountsProjection";
+import type { Account } from "../shared/account/accountsProjection";
+import { accountsCollectionName } from "../shared/account/accountsProjection";
 import { appConfig } from "../shared/config";
 import { pongo } from "../shared/database";
 import { DefaultDateProvider } from "../shared/dateProvider";
@@ -17,6 +14,9 @@ import { Head } from "../shared/head";
 import { logger } from "../shared/logger";
 import { API_ROUTES, ROUTES } from "../shared/routes";
 
+/**
+ * Login page endpoint.
+ */
 export const loginPage = new Hono().get("/", (c) => {
   return c.html(
     <html>
@@ -48,16 +48,17 @@ export const loginPage = new Hono().get("/", (c) => {
   );
 });
 
-/** The zod validator a login request */
+/**
+ * The zod validator a login request
+ */
 const loginRequestSchema = z.object({
   username: z.string().nonempty().toLowerCase().trim(),
   password: z.string().nonempty().trim(),
 });
 
-/** Login request */
-export type LoginRequest = z.infer<typeof loginRequestSchema>;
-
-/** Maps the login endpoint. */
+/**
+ * Login API endpoint.
+ */
 export const loginApi = new Hono().post(
   "/",
   zValidator("form", loginRequestSchema),

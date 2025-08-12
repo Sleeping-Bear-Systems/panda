@@ -1,6 +1,6 @@
 import { type AccountEvent } from "./accountEvent";
 import { type AccountState } from "./accountState";
-import type { ChangePassword} from "./changePassword";
+import type { ChangePassword } from "./changePassword";
 import { changePassword } from "./changePassword";
 import { type CreateAccount, createAccount } from "./createAccount";
 

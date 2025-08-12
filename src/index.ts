@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
-import { jwt } from "hono/jwt";
 
 import { aboutPage } from "./features/about";
 import {
@@ -21,10 +20,6 @@ import { API_ROUTES, ROUTES } from "./shared/routes";
 logger.info("🚀 Starting application");
 
 const app = new Hono()
-  .use(
-    "/api/private/*",
-    jwt({ secret: appConfig.JWT_SECRET, cookie: appConfig.jwtCookieName }),
-  )
   // back-end routes
   .get(API_ROUTES.PING, (c) => {
     return c.json({}, 200);

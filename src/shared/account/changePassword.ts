@@ -1,4 +1,4 @@
-import type { Command} from "@event-driven-io/emmett";
+import type { Command } from "@event-driven-io/emmett";
 import { IllegalStateError } from "@event-driven-io/emmett";
 
 import type { CommandMetadata } from "../commandMetadata";
