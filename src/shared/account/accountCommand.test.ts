@@ -5,7 +5,7 @@ import { decide } from "./accountCommand";
 import { evolve, initialState } from "./accountState";
 
 const given = DeciderSpecification.for({ decide, evolve, initialState });
-const now = new Date("2025-08-009");
+const now = new Date("2025-08-09");
 
 describe("Unknown", () => {
   test("apply CreateAccount command results in AccountCreated event", () => {
