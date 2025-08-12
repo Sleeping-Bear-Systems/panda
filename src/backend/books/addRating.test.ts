@@ -2,8 +2,10 @@ import { DeciderSpecification } from "@event-driven-io/emmett";
 import { describe, expect, test } from "bun:test";
 
 import { addRating } from "./addRating";
-import { AddRating, decide } from "./bookCommand";
-import { BookRating, BookState, evolve, initialState } from "./bookState";
+import type { AddRating} from "./bookCommand";
+import { decide } from "./bookCommand";
+import type { BookRating, BookState} from "./bookState";
+import { evolve, initialState } from "./bookState";
 
 const given = DeciderSpecification.for({ decide, evolve, initialState });
 

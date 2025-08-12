@@ -1,8 +1,8 @@
-import { Command } from "@event-driven-io/emmett";
+import type { Command } from "@event-driven-io/emmett";
 
 import { addRating } from "./addRating";
-import { BookEvent } from "./bookEvent";
-import { BookState } from "./bookState";
+import type { BookEvent } from "./bookEvent";
+import type { BookState } from "./bookState";
 import { recommendBook } from "./recommendBook";
 import { removeRating } from "./removeRating";
 

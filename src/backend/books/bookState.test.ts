@@ -1,7 +1,8 @@
 import { describe, expect, test } from "bun:test";
 
-import { BookRecommended, RatingAdded, RatingRemoved } from "./bookEvent";
-import { BookRating, BookState, evolve, initialState } from "./bookState";
+import type { BookRecommended, RatingAdded, RatingRemoved } from "./bookEvent";
+import type { BookRating, BookState} from "./bookState";
+import { evolve, initialState } from "./bookState";
 
 describe("initialState()", () => {
   test("return Unknown", () => {

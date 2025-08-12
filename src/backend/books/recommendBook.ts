@@ -1,6 +1,6 @@
-import { RecommendBook } from "./bookCommand";
-import { BookEvent } from "./bookEvent";
-import { BookState } from "./bookState";
+import type { RecommendBook } from "./bookCommand";
+import type { BookEvent } from "./bookEvent";
+import type { BookState } from "./bookState";
 
 /** Recommends a book. */
 export function recommendBook(

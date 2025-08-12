@@ -4,7 +4,8 @@ import { jwt } from "hono/jwt";
 import { z } from "zod/v4";
 
 import { handle } from "../backend/clubs/clubState";
-import { StartClub, startClub } from "../backend/clubs/startClub";
+import type { StartClub} from "../backend/clubs/startClub";
+import { startClub } from "../backend/clubs/startClub";
 import { appConfig } from "../shared/config";
 import { eventStore } from "../shared/database";
 import { DefaultDateProvider } from "../shared/dateProvider";

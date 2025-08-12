@@ -5,8 +5,9 @@ import { setCookie } from "hono/cookie";
 import { sign } from "hono/jwt";
 import { z } from "zod/v4";
 
+import type {
+  Account} from "../shared/account/accountsProjection";
 import {
-  Account,
   accountsCollectionName,
 } from "../shared/account/accountsProjection";
 import { appConfig } from "../shared/config";

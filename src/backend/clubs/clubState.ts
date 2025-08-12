@@ -1,7 +1,7 @@
 import { CommandHandler } from "@event-driven-io/emmett";
 
-import { ClubEvent } from "./clubEvent";
-import { MemberState } from "./memberState";
+import type { ClubEvent } from "./clubEvent";
+import type { MemberState } from "./memberState";
 
 /** Club state. */
 export type ClubState =

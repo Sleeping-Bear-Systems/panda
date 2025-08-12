@@ -1,7 +1,8 @@
 import { describe, expect, test } from "bun:test";
 
-import { RecommendBook } from "./bookCommand";
-import { BookRating, BookState, initialState } from "./bookState";
+import type { RecommendBook } from "./bookCommand";
+import type { BookRating, BookState} from "./bookState";
+import { initialState } from "./bookState";
 import { recommendBook } from "./recommendBook";
 
 describe("recommendBook()", () => {

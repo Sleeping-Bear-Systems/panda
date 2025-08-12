@@ -5,7 +5,7 @@ import { z } from "zod/v4";
 
 import { decide } from "../shared/account/accountCommand";
 import { handle as handle } from "../shared/account/accountState";
-import { CreateAccount } from "../shared/account/createAccount";
+import type { CreateAccount } from "../shared/account/createAccount";
 import { eventStore } from "../shared/database";
 import { DefaultDateProvider } from "../shared/dateProvider";
 import { Head } from "../shared/head";

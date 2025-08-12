@@ -1,7 +1,7 @@
 import { type Event } from "@event-driven-io/emmett";
 
-import { ClubMetadata } from "./clubMetadata";
-import { MemberRole, MemberStatus } from "./memberState";
+import type { ClubMetadata } from "./clubMetadata";
+import type { MemberRole, MemberStatus } from "./memberState";
 
 /** Club started event. */
 export type ClubStarted = Event<

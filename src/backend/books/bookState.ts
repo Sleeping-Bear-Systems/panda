@@ -1,4 +1,4 @@
-import { BookEvent } from "./bookEvent";
+import type { BookEvent } from "./bookEvent";
 
 /** Book rating. */
 export type BookRating = {

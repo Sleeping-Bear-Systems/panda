@@ -1,8 +1,8 @@
-import { Command } from "@event-driven-io/emmett";
+import type { Command } from "@event-driven-io/emmett";
 
-import { ClubEvent } from "./clubEvent";
-import { ClubMetadata } from "./clubMetadata";
-import { ClubState } from "./clubState";
+import type { ClubEvent } from "./clubEvent";
+import type { ClubMetadata } from "./clubMetadata";
+import type { ClubState } from "./clubState";
 
 export type StartClub = Command<
   "StartClub",

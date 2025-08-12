@@ -1,6 +1,6 @@
-import { RemoveRating } from "./bookCommand";
-import { BookEvent } from "./bookEvent";
-import { BookState } from "./bookState";
+import type { RemoveRating } from "./bookCommand";
+import type { BookEvent } from "./bookEvent";
+import type { BookState } from "./bookState";
 
 /** Remove rating function. */
 export function removeRating(
