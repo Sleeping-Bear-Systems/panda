@@ -10,11 +10,10 @@ import { ROUTES } from "./routes";
  * API JWT middleware.
  */
 export const apiJwt = createMiddleware(async (c, next) => {
-  const jwtMiddleWare = jwt({
+  return await jwt({
     secret: appConfig.JWT_SECRET,
     cookie: appConfig.jwtCookieName,
-  });
-  return await jwtMiddleWare(c, next);
+  })(c, next);
 });
 
 /**
@@ -22,11 +21,10 @@ export const apiJwt = createMiddleware(async (c, next) => {
  */
 export const pageJwt = createMiddleware(async (c, next) => {
   try {
-    const jwtMiddleWare = jwt({
+    return await jwt({
       secret: appConfig.JWT_SECRET,
       cookie: appConfig.jwtCookieName,
-    });
-    return await jwtMiddleWare(c, next);
+    })(c, next);
   } catch (error) {
     logger.error(error);
     return c.redirect(ROUTES.LOGIN, 302);
