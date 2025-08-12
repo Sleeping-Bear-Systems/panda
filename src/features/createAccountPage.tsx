@@ -103,7 +103,7 @@ export const createAccountApi: Hono = new Hono().post(
       decide(command, state),
     );
     if (result.createdNewStream) {
-      c.redirect(ROUTES.LOGIN);
+      return c.redirect(ROUTES.LOGIN);
     }
     return c.json({}, 400);
   },
