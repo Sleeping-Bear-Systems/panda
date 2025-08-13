@@ -1,6 +1,13 @@
-import { SQL } from "bun";
+import { randomUUIDv7, SQL } from "bun";
 import { parseArgs } from "util";
-import z from "zod/v4";
+
+import { decide } from "../src/shared/account/accountCommand.js";
+import type { AccountRole } from "../src/shared/account/accountEvent.js";
+import { handle } from "../src/shared/account/accountState.js";
+import type { CreateAccount } from "../src/shared/account/createAccount.js";
+import { appConfig } from "../src/shared/config.js";
+import { eventStore } from "../src/shared/database.js";
+import { DefaultDateProvider } from "../src/shared/dateProvider.js";
 
 /**
  * Obfuscates an URL by replacing the password.
@@ -47,17 +54,42 @@ async function createDatabase(url: URL): Promise<void> {
   await sql.unsafe(query);
 }
 
-/**
- * Environment schema.
- */
-const environmentSchema = z.object({
-  POSTGRES_CONNECTION_STRING: z.url(),
-});
+type AccountSpecification = {
+  username: string;
+  password: string;
+  email: string;
+  role: AccountRole;
+};
 
 /**
- * Environment type.
+ * Create accounts function.
  */
-type Environment = Readonly<z.infer<typeof environmentSchema>>;
+async function createAccounts(accounts: AccountSpecification[]): Promise<void> {
+  const now = DefaultDateProvider();
+  for (const account of accounts) {
+    const accountId = randomUUIDv7("hex", now);
+    const passwordHash = await Bun.password.hash(account.password, {
+      algorithm: "bcrypt",
+      cost: 10,
+    });
+    const command: CreateAccount = {
+      type: "CreateAccount",
+      data: {
+        accountId,
+        email: account.email,
+        username: account.username,
+        passwordHash: passwordHash,
+        role: account.role,
+      },
+      metadata: {
+        accountId,
+        timestamp: now,
+        correlationId: randomUUIDv7("hex", now),
+      },
+    };
+    await handle(eventStore, accountId, (state) => decide(command, state));
+  }
+}
 
 // get the CLI arguments
 const { values } = parseArgs({
@@ -77,24 +109,32 @@ const { values } = parseArgs({
   allowPositionals: true,
 });
 
-// get the environment variable
-const environment: Environment = {
-  ...environmentSchema.parse(process.env),
-};
-
 // parse the database URLs
-const { url, safeUrl } = getUrls(
-  values.url ?? environment.POSTGRES_CONNECTION_STRING,
-);
+const { url, safeUrl } = getUrls(appConfig.POSTGRES_CONNECTION_STRING);
 const force = values.force ?? false;
 
 // execute the action
 const action = values.action?.toLocaleLowerCase() ?? "";
 if (action === "drop" || (action === "create" && force)) {
-  console.log("Dropping database: " + safeUrl.toString());
+  console.log(`Dropping database: ${safeUrl.toString()}`);
   await dropDatabase(url, force);
 }
 if (action === "create") {
-  console.log("Creating database: " + safeUrl.toString());
+  console.log(`Creating database: ${safeUrl.toString()}`);
   await createDatabase(url);
+  console.log("Creating accounts");
+  await createAccounts([
+    {
+      username: "administrator",
+      password: "password_123456",
+      role: "Administrator",
+      email: "admin@example.com",
+    },
+    {
+      username: "standard",
+      password: "password_123456",
+      role: "Standard",
+      email: "standard@example.com",
+    },
+  ]);
 }

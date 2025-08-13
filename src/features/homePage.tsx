@@ -17,6 +17,7 @@ export const homePage = new Hono<{ Variables: PandaJwtVariables }>()
           <nav>
             <a href={ROUTES.ABOUT}>About</a>
             <a href={ROUTES.CHANGE_PASSWORD}>Change Password</a>
+            <label>{`${username} (${role})`}</label>
             <button
               hx-post={API_ROUTES.LOGOUT}
               hx-include="none"
@@ -27,7 +28,6 @@ export const homePage = new Hono<{ Variables: PandaJwtVariables }>()
             >
               Logout
             </button>
-            <h2>{username + " " + role}</h2>
           </nav>
           <hr />
           <h2>Under Construction</h2>
