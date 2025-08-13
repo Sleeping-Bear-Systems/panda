@@ -5,7 +5,7 @@ import { type EventMetadata } from "../eventMetadata.js";
 /**
  * Account roles.
  */
-export type AccountRole = "Admin" | "Standard";
+export type AccountRole = "Administrator" | "Standard";
 
 /**
  * Account created event.
