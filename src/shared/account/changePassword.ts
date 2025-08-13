@@ -1,9 +1,9 @@
 import type { Command } from "@event-driven-io/emmett";
 import { IllegalStateError } from "@event-driven-io/emmett";
 
-import type { CommandMetadata } from "../commandMetadata";
-import type { AccountEvent } from "./accountEvent";
-import type { AccountState } from "./accountState";
+import type { CommandMetadata } from "../commandMetadata.js";
+import type { AccountEvent } from "./accountEvent.js";
+import type { AccountState } from "./accountState.js";
 
 /**
  * Change password command.

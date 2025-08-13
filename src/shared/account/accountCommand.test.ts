@@ -1,8 +1,8 @@
 import { DeciderSpecification } from "@event-driven-io/emmett";
 import { describe, test } from "bun:test";
 
-import { decide } from "./accountCommand";
-import { evolve, initialState } from "./accountState";
+import { decide } from "./accountCommand.js";
+import { evolve, initialState } from "./accountState.js";
 
 const given = DeciderSpecification.for({ decide, evolve, initialState });
 const now = new Date("2025-08-09");

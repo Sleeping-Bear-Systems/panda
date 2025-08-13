@@ -1,8 +1,8 @@
 import { describe, expect, test } from "bun:test";
 
-import type { AccountCreated, PasswordChanged } from "./accountEvent";
-import type { Account } from "./accountsProjection";
-import { evolve } from "./accountsProjection";
+import type { AccountCreated, PasswordChanged } from "./accountEvent.js";
+import type { Account } from "./accountsProjection.js";
+import { evolve } from "./accountsProjection.js";
 
 const existingAccount: Account = {
   accountId: "user-1",

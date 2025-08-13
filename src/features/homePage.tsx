@@ -1,9 +1,9 @@
 import { Hono } from "hono";
 
-import { Head } from "../shared/head";
-import type { PandaJwtVariables } from "../shared/middlewares";
-import { pageJwt } from "../shared/middlewares";
-import { API_ROUTES, ROUTES } from "../shared/routes";
+import { Head } from "../shared/head.js";
+import type { PandaJwtVariables } from "../shared/middlewares.js";
+import { pageJwt } from "../shared/middlewares.js";
+import { API_ROUTES, ROUTES } from "../shared/routes.js";
 
 export const homePage = new Hono<{ Variables: PandaJwtVariables }>()
   .use("/", pageJwt)

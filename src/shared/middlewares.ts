@@ -2,9 +2,9 @@ import { createMiddleware } from "hono/factory";
 import type { JwtVariables } from "hono/jwt";
 import { jwt } from "hono/jwt";
 
-import { appConfig } from "./config";
-import { logger } from "./logger";
-import { ROUTES } from "./routes";
+import { appConfig } from "./config.js";
+import { logger } from "./logger.js";
+import { ROUTES } from "./routes.js";
 
 /**
  * API JWT middleware.

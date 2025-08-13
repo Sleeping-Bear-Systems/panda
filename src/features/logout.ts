@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { deleteCookie } from "hono/cookie";
 
-import { appConfig } from "../shared/config";
-import { ROUTES } from "../shared/routes";
+import { appConfig } from "../shared/config.js";
+import { ROUTES } from "../shared/routes.js";
 
 /**
  * Logout API endpoint.

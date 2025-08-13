@@ -1,8 +1,8 @@
-import { type AccountEvent } from "./accountEvent";
-import { type AccountState } from "./accountState";
-import type { ChangePassword } from "./changePassword";
-import { changePassword } from "./changePassword";
-import { type CreateAccount, createAccount } from "./createAccount";
+import { type AccountEvent } from "./accountEvent.js";
+import { type AccountState } from "./accountState.js";
+import type { ChangePassword } from "./changePassword.js";
+import { changePassword } from "./changePassword.js";
+import { type CreateAccount, createAccount } from "./createAccount.js";
 
 /**
  * Account command.

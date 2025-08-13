@@ -2,9 +2,9 @@ import { projections } from "@event-driven-io/emmett";
 import { getPostgreSQLEventStore } from "@event-driven-io/emmett-postgresql";
 import { pongoClient } from "@event-driven-io/pongo";
 
-import { accountsProjection } from "./account/accountsProjection";
-import { appConfig } from "./config";
-import { logger } from "./logger";
+import { accountsProjection } from "./account/accountsProjection.js";
+import { appConfig } from "./config.js";
+import { logger } from "./logger.js";
 
 logger.info("Starting Pongo client");
 export const pongo = pongoClient(appConfig.POSTGRES_CONNECTION_STRING);

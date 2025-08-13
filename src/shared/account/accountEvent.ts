@@ -1,6 +1,6 @@
 import { type Event } from "@event-driven-io/emmett";
 
-import { type EventMetadata } from "../eventMetadata";
+import { type EventMetadata } from "../eventMetadata.js";
 
 /**
  * Account roles.

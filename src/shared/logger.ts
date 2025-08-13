@@ -1,7 +1,7 @@
 import { SeqTransport } from "@datalust/winston-seq";
 import winston from "winston";
 
-import { appConfig } from "./config";
+import { appConfig } from "./config.js";
 
 // set up default transports
 const transports: winston.transport[] = [new winston.transports.Console()];

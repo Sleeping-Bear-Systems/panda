@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 
-import { initialState, mapToStreamId } from "./accountState";
+import { initialState, mapToStreamId } from "./accountState.js";
 
 describe("initialState()", () => {
   test("return Unknown", () => {
