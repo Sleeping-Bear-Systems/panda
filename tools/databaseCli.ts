@@ -90,25 +90,11 @@ const force = values.force ?? false;
 
 // execute the action
 const action = values.action?.toLocaleLowerCase() ?? "";
-switch (action) {
-  case "drop":
-    console.log("Dropping database: " + safeUrl.toString());
-    dropDatabase(url, force).catch((error: unknown) => {
-      console.error(error);
-    });
-    break;
-  case "create":
-    if (force) {
-      console.log("Dropping database: " + safeUrl.toString());
-      dropDatabase(url, force).catch((error: unknown) => {
-        console.error(error);
-      });
-    }
-    console.log("Creating database: " + safeUrl.toString());
-    createDatabase(url).catch((error: unknown) => {
-      console.error(error);
-    });
-    break;
-  default:
-    console.error("Unknown action: " + action);
+if (action == "drop" || (action == "create" && force)) {
+  console.log("Dropping database: " + safeUrl.toString());
+  await dropDatabase(url, force);
+}
+if (action == "create") {
+  console.log("Creating database: " + safeUrl.toString());
+  await createDatabase(url);
 }
