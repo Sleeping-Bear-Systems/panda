@@ -3,8 +3,9 @@
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "strict": true,
-    "target": "esnext",
-    "module": "esnext"
+    "target": "esnext"
   }
 }
