@@ -8,7 +8,7 @@ const environmentConfigSchema = z.object({
   SEQ_URL: z.url().optional(),
   JWT_SECRET: z.string().min(16),
   BCRYPT_KEY: z.string().min(16),
-  POSTGRES_CONNECTION_STRING: z.string(),
+  POSTGRES_CONNECTION_STRING: z.url(),
   PORT: z.coerce.number().min(1024).max(49151),
 });
 
