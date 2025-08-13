@@ -55,7 +55,6 @@ async function createDatabase(url: URL): Promise<void> {
 }
 
 type AccountSpecification = {
-  accountId: string;
   username: string;
   password: string;
   email: string;
@@ -63,11 +62,12 @@ type AccountSpecification = {
 };
 
 /**
- *
+ * Create accounts function.
  */
 async function createAccounts(accounts: AccountSpecification[]): Promise<void> {
   const now = DefaultDateProvider();
   for (const account of accounts) {
+    const accountId = randomUUIDv7("hex", now);
     const passwordHash = await Bun.password.hash(account.password, {
       algorithm: "bcrypt",
       cost: 10,
@@ -75,21 +75,19 @@ async function createAccounts(accounts: AccountSpecification[]): Promise<void> {
     const command: CreateAccount = {
       type: "CreateAccount",
       data: {
-        accountId: account.accountId,
+        accountId,
         email: account.email,
         username: account.username,
         passwordHash: passwordHash,
         role: account.role,
       },
       metadata: {
-        accountId: account.accountId,
+        accountId,
         timestamp: now,
         correlationId: randomUUIDv7("hex", now),
       },
     };
-    await handle(eventStore, account.accountId, (state) =>
-      decide(command, state),
-    );
+    await handle(eventStore, accountId, (state) => decide(command, state));
   }
 }
 
@@ -127,14 +125,12 @@ if (action === "create") {
   console.log("Creating accounts");
   await createAccounts([
     {
-      accountId: "6261320e-bb5c-47af-8be4-5f55838c8e15",
       username: "administrator",
       password: "password_123456",
       role: "Administrator",
       email: "admin@example.com",
     },
     {
-      accountId: "cbba3e73-80ca-4929-80c5-3289d3887d2d",
       username: "standard",
       password: "password_123456",
       role: "Standard",
