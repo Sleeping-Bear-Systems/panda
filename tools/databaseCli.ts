@@ -90,11 +90,11 @@ const force = values.force ?? false;
 
 // execute the action
 const action = values.action?.toLocaleLowerCase() ?? "";
-if (action == "drop" || (action == "create" && force)) {
+if (action === "drop" || (action === "create" && force)) {
   console.log("Dropping database: " + safeUrl.toString());
   await dropDatabase(url, force);
 }
-if (action == "create") {
+if (action === "create") {
   console.log("Creating database: " + safeUrl.toString());
   await createDatabase(url);
 }
