@@ -5,14 +5,14 @@ import { setCookie } from "hono/cookie";
 import { sign } from "hono/jwt";
 import { z } from "zod/v4";
 
-import type { Account } from "../shared/account/accountsProjection";
-import { accountsCollectionName } from "../shared/account/accountsProjection";
-import { appConfig } from "../shared/config";
-import { pongo } from "../shared/database";
-import { DefaultDateProvider } from "../shared/dateProvider";
-import { Head } from "../shared/head";
-import { logger } from "../shared/logger";
-import { API_ROUTES, ROUTES } from "../shared/routes";
+import type { Account } from "../shared/account/accountsProjection.js";
+import { accountsCollectionName } from "../shared/account/accountsProjection.js";
+import { appConfig } from "../shared/config.js";
+import { pongo } from "../shared/database.js";
+import { DefaultDateProvider } from "../shared/dateProvider.js";
+import { Head } from "../shared/head.js";
+import { logger } from "../shared/logger.js";
+import { API_ROUTES, ROUTES } from "../shared/routes.js";
 
 /**
  * Login page endpoint.

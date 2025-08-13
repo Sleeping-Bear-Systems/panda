@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 
-import { Head } from "../shared/head";
-import { ROUTES } from "../shared/routes";
+import { Head } from "../shared/head.js";
+import { ROUTES } from "../shared/routes.js";
 
 export const aboutPage = new Hono().get("/", (c) => {
   return c.html(

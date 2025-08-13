@@ -3,13 +3,13 @@ import { randomUUIDv7 } from "bun";
 import { Hono } from "hono";
 import { z } from "zod/v4";
 
-import { decide } from "../shared/account/accountCommand";
-import { handle as handle } from "../shared/account/accountState";
-import type { CreateAccount } from "../shared/account/createAccount";
-import { eventStore } from "../shared/database";
-import { DefaultDateProvider } from "../shared/dateProvider";
-import { Head } from "../shared/head";
-import { API_ROUTES, ROUTES } from "../shared/routes";
+import { decide } from "../shared/account/accountCommand.js";
+import { handle as handle } from "../shared/account/accountState.js";
+import type { CreateAccount } from "../shared/account/createAccount.js";
+import { eventStore } from "../shared/database.js";
+import { DefaultDateProvider } from "../shared/dateProvider.js";
+import { Head } from "../shared/head.js";
+import { API_ROUTES, ROUTES } from "../shared/routes.js";
 
 /**
  * Create Account page endpoint.

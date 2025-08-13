@@ -1,21 +1,21 @@
 import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
 
-import { aboutPage } from "./features/about";
+import { aboutPage } from "./features/about.js";
 import {
   changePasswordApi,
   changePasswordPage,
-} from "./features/changePasswordPage";
+} from "./features/changePasswordPage.js";
 import {
   createAccountApi,
   createAccountPage,
-} from "./features/createAccountPage";
-import { homePage } from "./features/homePage";
-import { loginApi, loginPage } from "./features/login";
-import { logout as logoutApi } from "./features/logout";
-import { appConfig } from "./shared/config";
-import { logger } from "./shared/logger";
-import { API_ROUTES, ROUTES } from "./shared/routes";
+} from "./features/createAccountPage.js";
+import { homePage } from "./features/homePage.js";
+import { loginApi, loginPage } from "./features/login.js";
+import { logout as logoutApi } from "./features/logout.js";
+import { appConfig } from "./shared/config.js";
+import { logger } from "./shared/logger.js";
+import { API_ROUTES, ROUTES } from "./shared/routes.js";
 
 logger.info("🚀 Starting application");
 

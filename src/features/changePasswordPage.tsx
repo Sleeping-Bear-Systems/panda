@@ -3,15 +3,15 @@ import { randomUUIDv7 } from "bun";
 import { Hono } from "hono";
 import { z } from "zod/v4";
 
-import { decide } from "../shared/account/accountCommand";
-import { handle } from "../shared/account/accountState";
-import type { ChangePassword } from "../shared/account/changePassword";
-import { eventStore } from "../shared/database";
-import { DefaultDateProvider } from "../shared/dateProvider";
-import { Head } from "../shared/head";
-import type { PandaJwtVariables } from "../shared/middlewares";
-import { apiJwt, pageJwt } from "../shared/middlewares";
-import { API_ROUTES, ROUTES } from "../shared/routes";
+import { decide } from "../shared/account/accountCommand.js";
+import { handle } from "../shared/account/accountState.js";
+import type { ChangePassword } from "../shared/account/changePassword.js";
+import { eventStore } from "../shared/database.js";
+import { DefaultDateProvider } from "../shared/dateProvider.js";
+import { Head } from "../shared/head.js";
+import type { PandaJwtVariables } from "../shared/middlewares.js";
+import { apiJwt, pageJwt } from "../shared/middlewares.js";
+import { API_ROUTES, ROUTES } from "../shared/routes.js";
 
 /**
  * Change password page.
