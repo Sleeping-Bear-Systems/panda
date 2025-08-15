@@ -1,12 +1,11 @@
 import { Hono } from "hono";
 
-import { Head } from "../shared/head.js";
+import { Layout } from "../shared/Layout.js";
 import { ROUTES } from "../shared/routes.js";
 
 export const aboutPage = new Hono().get("/", (c) => {
   return c.html(
-    <html>
-      <Head />
+    <Layout title="About">
       <body>
         <img src="/images/sleeping_bear_logo.svg" alt="Sleeping Bear Logo" />
         <nav>
@@ -28,6 +27,6 @@ export const aboutPage = new Hono().get("/", (c) => {
           Copyright &copy; {new Date().getFullYear()} Sleeping Bear Systems
         </div>
       </body>
-    </html>,
+    </Layout>,
   );
 });

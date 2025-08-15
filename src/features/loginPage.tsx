@@ -10,7 +10,7 @@ import { accountsCollectionName } from "../shared/account/accountsProjection.js"
 import { appConfig } from "../shared/config.js";
 import { pongo } from "../shared/database.js";
 import { DefaultDateProvider } from "../shared/dateProvider.js";
-import { Head } from "../shared/head.js";
+import { Layout } from "../shared/Layout.js";
 import { logger } from "../shared/logger.js";
 import { API_ROUTES, ROUTES } from "../shared/routes.js";
 
@@ -19,32 +19,29 @@ import { API_ROUTES, ROUTES } from "../shared/routes.js";
  */
 export const loginPage = new Hono().get("/", (c) => {
   return c.html(
-    <html>
-      <Head />
-      <body>
-        <h1>Login</h1>
-        <form action={API_ROUTES.LOGIN} method="post">
-          <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            name="username"
-            type="text"
-            required
-            autocomplete="username"
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            required
-            autocomplete="current-password"
-          />
-          <button type="submit">Submit</button>
-        </form>
-        <a href={ROUTES.CREATE_ACCOUNT}>Create Account</a>
-      </body>
-    </html>,
+    <Layout title="Login">
+      <h1>Login</h1>
+      <form action={API_ROUTES.LOGIN} method="post">
+        <label htmlFor="username">Username</label>
+        <input
+          id="username"
+          name="username"
+          type="text"
+          required
+          autocomplete="username"
+        />
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          required
+          autocomplete="current-password"
+        />
+        <button type="submit">Submit</button>
+      </form>
+      <a href={ROUTES.CREATE_ACCOUNT}>Create Account</a>
+    </Layout>,
   );
 });
 

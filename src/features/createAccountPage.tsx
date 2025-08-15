@@ -8,7 +8,7 @@ import { handle as handle } from "../shared/account/accountState.js";
 import type { CreateAccount } from "../shared/account/createAccount.js";
 import { eventStore } from "../shared/database.js";
 import { DefaultDateProvider } from "../shared/dateProvider.js";
-import { Head } from "../shared/head.js";
+import { Layout } from "../shared/Layout.js";
 import { API_ROUTES, ROUTES } from "../shared/routes.js";
 
 /**
@@ -16,53 +16,50 @@ import { API_ROUTES, ROUTES } from "../shared/routes.js";
  */
 export const createAccountPage: Hono = new Hono().get("/", (c) => {
   return c.html(
-    <html>
-      <Head />
-      <body>
-        <nav>
-          <a href={ROUTES.HOME}>Home</a>
-        </nav>
-        <header>
-          <h1>Create Account</h1>
-        </header>
-        <form action={API_ROUTES.CREATE_ACCOUNT} method="post">
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            autocomplete="email"
-          />
-          <label htmlFor="username">Username</label>
-          <input
-            id="username"
-            name="username"
-            type="text"
-            required
-            autocomplete="username"
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            required
-            autocomplete="new-password"
-          />
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            id="confirmPassword"
-            name="confirmPassword"
-            type="password"
-            required
-            autocomplete="new-password"
-          />
-          <button type="submit">Submit</button>
-        </form>
-        <div id="errors"></div>
-      </body>
-    </html>,
+    <Layout title="Create Account">
+      <nav>
+        <a href={ROUTES.HOME}>Home</a>
+      </nav>
+      <header>
+        <h1>Create Account</h1>
+      </header>
+      <form action={API_ROUTES.CREATE_ACCOUNT} method="post">
+        <label htmlFor="email">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          autocomplete="email"
+        />
+        <label htmlFor="username">Username</label>
+        <input
+          id="username"
+          name="username"
+          type="text"
+          required
+          autocomplete="username"
+        />
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          required
+          autocomplete="new-password"
+        />
+        <label htmlFor="confirmPassword">Confirm Password</label>
+        <input
+          id="confirmPassword"
+          name="confirmPassword"
+          type="password"
+          required
+          autocomplete="new-password"
+        />
+        <button type="submit">Submit</button>
+      </form>
+      <div id="errors"></div>
+    </Layout>,
   );
 });
 
