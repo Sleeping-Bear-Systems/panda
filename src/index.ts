@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
 
-import { aboutPage } from "./features/about.js";
+import { aboutPage } from "./features/aboutPage.js";
 import {
   changePasswordApi,
   changePasswordPage,
@@ -11,7 +11,7 @@ import {
   createAccountPage,
 } from "./features/createAccountPage.js";
 import { homePage } from "./features/homePage.js";
-import { loginApi, loginPage } from "./features/login.js";
+import { loginApi, loginPage } from "./features/loginPage.js";
 import { logout as logoutApi } from "./features/logout.js";
 import { appConfig } from "./shared/config.js";
 import { logger } from "./shared/logger.js";

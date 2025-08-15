@@ -8,7 +8,7 @@ import { handle } from "../shared/account/accountState.js";
 import type { ChangePassword } from "../shared/account/changePassword.js";
 import { eventStore } from "../shared/database.js";
 import { DefaultDateProvider } from "../shared/dateProvider.js";
-import { Head } from "../shared/head.js";
+import { Layout } from "../shared/Layout.js";
 import type { PandaJwtVariables } from "../shared/middlewares.js";
 import { apiJwt, pageJwt } from "../shared/middlewares.js";
 import { API_ROUTES, ROUTES } from "../shared/routes.js";
@@ -20,37 +20,34 @@ export const changePasswordPage = new Hono<{ Variables: PandaJwtVariables }>()
   .use("/", pageJwt)
   .get("/", (c) => {
     return c.html(
-      <html>
-        <Head />
-        <body>
-          <nav>
-            <a href={ROUTES.HOME}>Home</a>
-          </nav>
-          <header>
-            <h1>Change Password</h1>
-          </header>
-          <form action={API_ROUTES.CHANGE_PASSWORD} method="post">
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              autocomplete="new-password"
-            />
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              required
-              autocomplete="new-password"
-            />
-            <button type="submit">Submit</button>
-          </form>
-          <div id="errors"></div>
-        </body>
-      </html>,
+      <Layout title="Change Password">
+        <nav>
+          <a href={ROUTES.HOME}>Home</a>
+        </nav>
+        <header>
+          <h1>Change Password</h1>
+        </header>
+        <form action={API_ROUTES.CHANGE_PASSWORD} method="post">
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            required
+            autocomplete="new-password"
+          />
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            required
+            autocomplete="new-password"
+          />
+          <button type="submit">Submit</button>
+        </form>
+        <div id="errors"></div>
+      </Layout>,
     );
   });
 
