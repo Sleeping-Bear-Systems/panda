@@ -22,6 +22,7 @@ export function Layout(props: LayoutProps): JSX.Element {
         <link rel="stylesheet" href="/css/app.css" />
         <script src="/js/htmx.min.js"></script>
         <title>{props.title}</title>
+        <link rel="icon" href="/images/favicon.svg" type="image/svg+xml" />
       </head>
       <body>{props.children}</body>
     </html>
