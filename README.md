@@ -6,14 +6,14 @@
 
 The Panda application is configured through the following environment variables.
 
-| Variables                  | Description                                            | Optional |
-| -------------------------- | ------------------------------------------------------ | -------- |
-| PORT                       | The port the web application is exposed on.            |          |
-| SEQ_API_KEY                | The API key for the Seq server.                        | Yes      |
-| SEQ_URL                    | The listen URL for the Seq server.                     | Yes      |
-| POSTGRES_CONNECTION_STRING | The connection string to the Postgres database.        |          |
-| JWT_SECRET                 | The encryption key for securing JSON web tokens (JWT). |          |
-| BCRYPT_KEY                 | The bcrypt encryption key used for password hashes.    |          |
+| Variables                  | Description                                            | Optional | Notes               |
+| -------------------------- | ------------------------------------------------------ | -------- | ------------------- |
+| PORT                       | The port the web application is exposed on.            |          |                     |
+| SEQ_API_KEY                | The API key for the Seq server.                        | Yes      |                     |
+| SEQ_URL                    | The listen URL for the Seq server.                     | Yes      |                     |
+| POSTGRES_CONNECTION_STRING | The connection string to the Postgres database.        |          | Use the URL format. |
+| JWT_SECRET                 | The encryption key for securing JSON web tokens (JWT). |          |                     |
+| BCRYPT_KEY                 | The bcrypt encryption key used for password hashes.    |          |                     |
 
 ### Setting up a development database
 
