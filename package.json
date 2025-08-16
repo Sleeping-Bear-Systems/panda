@@ -6,7 +6,6 @@
     "databaseCli:create": "bun run tools/databaseCli.ts --action create ",
     "databaseCli:drop": "bun run tools/databaseCli.ts --action drop ",
     "databaseCli:recreate": "bun run tools/databaseCli.ts --action create --force ",
-    "databaseCli": "bun run tools/databaseCli.ts",
     "debug": "bun run --hot --inspect src/index.ts",
     "dev": "bun run --hot src/index.ts",
     "fix": "bun lint:fix && bun format:fix",
