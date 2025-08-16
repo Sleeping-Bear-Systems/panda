@@ -68,10 +68,10 @@ export const createAccountPage: Hono = new Hono().get("/", (c) => {
  */
 const createAccountRequestSchema = z
   .object({
-    email: z.email().toLowerCase().trim(),
+    email: z.email().toLowerCase(),
     username: z.string().trim().toLowerCase().min(3),
-    password: z.string().trim().min(12),
-    confirmPassword: z.string().trim().min(12),
+    password: z.string().min(12),
+    confirmPassword: z.string().min(12),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",

@@ -51,7 +51,7 @@ export const loginPage = new Hono().get("/", (c) => {
  */
 const loginRequestSchema = z.object({
   username: z.string().trim().toLowerCase().min(3),
-  password: z.string().nonempty(),
+  password: z.string().min(12),
 });
 
 /**
