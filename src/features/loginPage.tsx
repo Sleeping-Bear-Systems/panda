@@ -99,6 +99,7 @@ export const loginApi = new Hono().post(
     });
     logger.info("User '%s' logged in", username);
     c.header("HX-Redirect", ROUTES.HOME);
-    return c.html("Login Successful");
+    c.status(204);
+    return c.text("");
   },
 );
