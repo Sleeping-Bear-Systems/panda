@@ -4,7 +4,7 @@ import { jwt } from "hono/jwt";
 
 import { appConfig } from "./config.js";
 import { logger } from "./logger.js";
-import { ROUTES } from "./routes.js";
+import { PAGE_ROUTES } from "./routes.js";
 
 /**
  * API JWT middleware.
@@ -27,7 +27,7 @@ export const pageJwt = createMiddleware(async (c, next) => {
     })(c, next);
   } catch (error) {
     logger.error(error);
-    return c.redirect(ROUTES.LOGIN, 302);
+    return c.redirect(PAGE_ROUTES.LOGIN, 302);
   }
 });
 

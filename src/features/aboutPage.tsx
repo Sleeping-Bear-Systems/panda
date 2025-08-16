@@ -1,14 +1,14 @@
 import { Hono } from "hono";
 
 import { Layout } from "../shared/Layout.js";
-import { ROUTES } from "../shared/routes.js";
+import { PAGE_ROUTES } from "../shared/routes.js";
 
 export const aboutPage = new Hono().get("/", (c) => {
   return c.html(
     <Layout title="About">
       <img src="/images/sleeping_bear_logo.svg" alt="Sleeping Bear Logo" />
       <nav>
-        <a href={ROUTES.HOME}>Home</a>
+        <a href={PAGE_ROUTES.HOME}>Home</a>
       </nav>
       <h1>About</h1>
       <div>

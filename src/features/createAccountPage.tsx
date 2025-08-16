@@ -9,7 +9,7 @@ import type { CreateAccount } from "../shared/account/createAccount.js";
 import { eventStore } from "../shared/database.js";
 import { DefaultDateProvider } from "../shared/dateProvider.js";
 import { Layout } from "../shared/Layout.js";
-import { API_ROUTES, ROUTES } from "../shared/routes.js";
+import { API_ROUTES, PAGE_ROUTES } from "../shared/routes.js";
 
 /**
  * Create Account page endpoint.
@@ -18,7 +18,7 @@ export const createAccountPage: Hono = new Hono().get("/", (c) => {
   return c.html(
     <Layout title="Create Account">
       <nav>
-        <a href={ROUTES.HOME}>Home</a>
+        <a href={PAGE_ROUTES.HOME}>Home</a>
       </nav>
       <header>
         <h1>Create Account</h1>
@@ -119,7 +119,7 @@ export const createAccountApi: Hono = new Hono().post(
       decide(command, state),
     );
     if (result.createdNewStream) {
-      return c.redirect(ROUTES.LOGIN);
+      return c.redirect(PAGE_ROUTES.LOGIN);
     }
     return c.json({}, 400);
   },
