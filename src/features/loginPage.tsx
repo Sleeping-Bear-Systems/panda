@@ -50,7 +50,7 @@ export const loginPage = new Hono().get("/", (c) => {
  * The zod validator a login request
  */
 const loginRequestSchema = z.object({
-  username: z.string().trim().toLowerCase().nonempty(),
+  username: z.string().trim().toLowerCase().min(3),
   password: z.string().nonempty(),
 });
 
