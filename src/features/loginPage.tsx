@@ -21,7 +21,7 @@ export const loginPage = new Hono().get("/", (c) => {
   return c.html(
     <Layout title="Login">
       <h1>Login</h1>
-      <form action={API_ROUTES.LOGIN} method="post">
+      <form hx-post={API_ROUTES.LOGIN} hx-target="#errors">
         <label htmlFor="username">Username</label>
         <input
           id="username"
@@ -38,7 +38,8 @@ export const loginPage = new Hono().get("/", (c) => {
           required
           autocomplete="current-password"
         />
-        <button type="submit">Submit</button>
+        <div id="errors"></div>
+        <button>Submit</button>
       </form>
       <a href={ROUTES.CREATE_ACCOUNT}>Create Account</a>
     </Layout>,
@@ -67,7 +68,7 @@ export const loginApi = new Hono().post(
       .findOne({ username });
     if (!account) {
       logger.info("User not found: '%s'", username);
-      return c.text("Invalid username or password", 401);
+      return c.html(<div>🛑 Invalid username or password</div>);
     }
     const isValidPassword = await Bun.password.verify(
       password,
@@ -76,7 +77,7 @@ export const loginApi = new Hono().post(
     );
     if (!isValidPassword) {
       logger.info("Invalid password: '%s'", username);
-      return c.text("Invalid username or password", 401);
+      return c.html(<div>🛑 Invalid username or password</div>);
     }
     const token = await sign(
       {
@@ -97,6 +98,7 @@ export const loginApi = new Hono().post(
       expires: addDays(DefaultDateProvider(), 1),
     });
     logger.info("User '%s' logged in", username);
-    return c.redirect(ROUTES.HOME);
+    c.header("HX-Redirect", ROUTES.HOME);
+    return c.html("Login Successful");
   },
 );
