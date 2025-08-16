@@ -39,7 +39,7 @@ export const loginPage = new Hono().get("/", (c) => {
           autocomplete="current-password"
         />
         <div id="errors"></div>
-        <button>Submit</button>
+        <button type="submit">Submit</button>
       </form>
       <a href={ROUTES.CREATE_ACCOUNT}>Create Account</a>
     </Layout>,
