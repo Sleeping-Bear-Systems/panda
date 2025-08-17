@@ -15,7 +15,7 @@ export const homePage = new Hono<{ Variables: PandaJwtVariables }>()
         <nav>
           <a href={PAGE_ROUTES.ABOUT}>About</a>
           <a href={PAGE_ROUTES.CHANGE_PASSWORD}>Change Password</a>
-          <a href={PAGE_ROUTES.ACCOUNTS}>Users</a>
+          <a href={PAGE_ROUTES.ACCOUNTS}>Accounts</a>
           <span>{`${username} (${role})`}</span>
           <button
             type="button"
