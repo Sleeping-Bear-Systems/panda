@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
 
 import { aboutPage } from "./features/aboutPage.js";
+import { accountsApi, accountsPage } from "./features/accountsPage.js";
 import {
   changePasswordApi,
   changePasswordPage,
@@ -15,7 +16,7 @@ import { loginApi, loginPage } from "./features/loginPage.js";
 import { logout as logoutApi } from "./features/logout.js";
 import { appConfig } from "./shared/config.js";
 import { logger } from "./shared/logger.js";
-import { API_ROUTES, ROUTES } from "./shared/routes.js";
+import { API_ROUTES, PAGE_ROUTES } from "./shared/routes.js";
 
 logger.info("🚀 Starting application");
 
@@ -28,12 +29,14 @@ const app = new Hono()
   .route(API_ROUTES.LOGOUT, logoutApi)
   .route(API_ROUTES.CREATE_ACCOUNT, createAccountApi)
   .route(API_ROUTES.CHANGE_PASSWORD, changePasswordApi)
+  .route(API_ROUTES.ACCOUNTS, accountsApi)
   // front-end routes
-  .route(ROUTES.LOGIN, loginPage)
-  .route(ROUTES.ABOUT, aboutPage)
-  .route(ROUTES.HOME, homePage)
-  .route(ROUTES.CREATE_ACCOUNT, createAccountPage)
-  .route(ROUTES.CHANGE_PASSWORD, changePasswordPage)
+  .route(PAGE_ROUTES.LOGIN, loginPage)
+  .route(PAGE_ROUTES.ABOUT, aboutPage)
+  .route(PAGE_ROUTES.HOME, homePage)
+  .route(PAGE_ROUTES.CREATE_ACCOUNT, createAccountPage)
+  .route(PAGE_ROUTES.CHANGE_PASSWORD, changePasswordPage)
+  .route(PAGE_ROUTES.ACCOUNTS, accountsPage)
   // static assets
   .use("/*", serveStatic({ root: "./public" }));
 

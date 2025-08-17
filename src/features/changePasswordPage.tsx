@@ -11,7 +11,7 @@ import { DefaultDateProvider } from "../shared/dateProvider.js";
 import { Layout } from "../shared/Layout.js";
 import type { PandaJwtVariables } from "../shared/middlewares.js";
 import { apiJwt, pageJwt } from "../shared/middlewares.js";
-import { API_ROUTES, ROUTES } from "../shared/routes.js";
+import { API_ROUTES, PAGE_ROUTES } from "../shared/routes.js";
 
 /**
  * Change password page.
@@ -22,7 +22,7 @@ export const changePasswordPage = new Hono<{ Variables: PandaJwtVariables }>()
     return c.html(
       <Layout title="Change Password">
         <nav>
-          <a href={ROUTES.HOME}>Home</a>
+          <a href={PAGE_ROUTES.HOME}>Home</a>
         </nav>
         <header>
           <h1>Change Password</h1>
@@ -90,5 +90,5 @@ export const changePasswordApi = new Hono<{ Variables: PandaJwtVariables }>()
       },
     };
     await handle(eventStore, accountId, (state) => decide(command, state));
-    return c.redirect(ROUTES.HOME);
+    return c.redirect(PAGE_ROUTES.HOME);
   });

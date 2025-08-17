@@ -12,7 +12,7 @@ import { pongo } from "../shared/database.js";
 import { DefaultDateProvider } from "../shared/dateProvider.js";
 import { Layout } from "../shared/Layout.js";
 import { logger } from "../shared/logger.js";
-import { API_ROUTES, ROUTES } from "../shared/routes.js";
+import { API_ROUTES, PAGE_ROUTES } from "../shared/routes.js";
 
 /**
  * Login page endpoint.
@@ -41,7 +41,7 @@ export const loginPage = new Hono().get("/", (c) => {
         <div id="errors"></div>
         <button type="submit">Submit</button>
       </form>
-      <a href={ROUTES.CREATE_ACCOUNT}>Create Account</a>
+      <a href={PAGE_ROUTES.CREATE_ACCOUNT}>Create Account</a>
     </Layout>,
   );
 });
@@ -97,8 +97,8 @@ export const loginApi = new Hono().post(
       secure: true,
       expires: addDays(DefaultDateProvider(), 1),
     });
-    logger.info("User '%s' logged in", username);
-    c.header("HX-Redirect", ROUTES.HOME);
+    logger.info("Account '%s' logged in", account.accountId);
+    c.header("HX-Redirect", PAGE_ROUTES.HOME);
     c.status(204);
     return c.text("");
   },
