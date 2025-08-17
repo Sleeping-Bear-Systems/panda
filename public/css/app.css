@@ -34,3 +34,12 @@ nav {
 a {
   margin-right: 1em;
 }
+
+table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th,
+td {
+  border: 1px solid black;
+}

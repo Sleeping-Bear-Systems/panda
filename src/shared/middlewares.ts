@@ -1,3 +1,4 @@
+import type { Context } from "hono";
 import { createMiddleware } from "hono/factory";
 import type { JwtVariables } from "hono/jwt";
 import { jwt } from "hono/jwt";
@@ -31,10 +32,23 @@ export const pageJwt = createMiddleware(async (c, next) => {
   }
 });
 
+export const AdministratorAuth = createMiddleware(
+  async (c: Context<{ Variables: PandaJwtVariables }>, next) => {
+    const claims = getJwtClaims(c);
+    if (!claims) {
+      return c.text("Not Authorized", 401);
+    }
+    if (claims.role !== "Administrator") {
+      return c.text("Forbidden", 403);
+    }
+    await next();
+  },
+);
+
 /**
- * Hono variable supporting the JWT payload.
+ * JWT Claims.
  */
-export type PandaJwtVariables = JwtVariables<{
+export type PandaJwtClaims = {
   sub: string;
   preferred_username: string;
   email: string;
@@ -42,4 +56,18 @@ export type PandaJwtVariables = JwtVariables<{
   iss: string;
   exp: number;
   iat: number;
-}>;
+};
+
+/**
+ * Hono variable supporting the JWT payload.
+ */
+export type PandaJwtVariables = JwtVariables<PandaJwtClaims>;
+
+/**
+ * Gets the Panda JWT claims.
+ */
+export function getJwtClaims(
+  c: Context<{ Variables: PandaJwtVariables }>,
+): PandaJwtClaims | undefined {
+  return c.get("jwtPayload");
+}

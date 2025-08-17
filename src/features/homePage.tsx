@@ -15,15 +15,13 @@ export const homePage = new Hono<{ Variables: PandaJwtVariables }>()
         <nav>
           <a href={PAGE_ROUTES.ABOUT}>About</a>
           <a href={PAGE_ROUTES.CHANGE_PASSWORD}>Change Password</a>
-          <a href={PAGE_ROUTES.USERS}>Users</a>
-          <label>{`${username} (${role})`}</label>
+          <a href={PAGE_ROUTES.ACCOUNTS}>Users</a>
+          <span>{`${username} (${role})`}</span>
           <button
+            type="button"
             hx-post={API_ROUTES.LOGOUT}
             hx-include="none"
             hx-trigger="click"
-            hx-on--after-request={
-              "window.location.href='" + PAGE_ROUTES.LOGIN + "'"
-            }
           >
             Logout
           </button>

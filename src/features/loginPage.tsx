@@ -97,7 +97,7 @@ export const loginApi = new Hono().post(
       secure: true,
       expires: addDays(DefaultDateProvider(), 1),
     });
-    logger.info("User '%s' logged in", username);
+    logger.info("Account '%s' logged in", account.accountId);
     c.header("HX-Redirect", PAGE_ROUTES.HOME);
     c.status(204);
     return c.text("");

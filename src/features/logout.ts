@@ -9,5 +9,7 @@ import { PAGE_ROUTES } from "../shared/routes.js";
  */
 export const logout = new Hono().post("/", (c) => {
   deleteCookie(c, appConfig.jwtCookieName);
-  return c.redirect(PAGE_ROUTES.LOGIN);
+  c.header("HX-Redirect", PAGE_ROUTES.LOGIN);
+  c.status(204);
+  return c.text("");
 });

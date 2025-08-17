@@ -3,12 +3,12 @@
  */
 export const PAGE_ROUTES = {
   ABOUT: "/about",
+  ACCOUNTS: "/accounts",
   CHANGE_PASSWORD: "/change-password",
   CREATE_ACCOUNT: "/create-account",
   HOME: "/",
   LOGIN: "/login",
-  USERS: "/users",
-};
+} as const;
 
 /**
  * API routes.
@@ -19,5 +19,5 @@ export const API_ROUTES = {
   LOGIN: "/api/public/login",
   LOGOUT: "/api/public/logout",
   PING: "/api/public/ping",
-  USERS: "/api/private/users",
-};
+  ACCOUNTS: "/api/private/accounts",
+} as const;
